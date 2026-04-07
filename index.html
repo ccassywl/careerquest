@@ -15,35 +15,87 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { 'sans': ['Nunito', 'sans-serif'], 'display': ['Poppins', 'sans-serif'] }
+                    fontFamily: {
+                        'sans': ['Nunito', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif']
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #f0fdf4; background-image: radial-gradient(#e2e8f0 2px, transparent 2px); background-size: 30px 30px; color: #1f2937; }
+        body { 
+            background-color: #f0fdf4; 
+            background-image: radial-gradient(#e2e8f0 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: #1f2937; 
+        }
         .hide { display: none !important; }
-        .game-card { background: white; border-radius: 1.5rem; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); transition: all 0.3s ease; }
-        .game-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12); }
-        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border-radius: 9999px; transition: transform 0.2s, box-shadow 0.2s; }
+        .game-card { 
+            background: white; 
+            border-radius: 1.5rem; 
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); 
+            transition: all 0.3s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12);
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); 
+            color: white; 
+            border-radius: 9999px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
         .btn-primary:active { transform: scale(0.96); }
         .btn-primary:hover { box-shadow: 0 10px 20px -10px rgba(99,102,241,0.5); transform: translateY(-2px); }
-        .btn-option { background: #f8fafc; border: 3px solid #e2e8f0; border-radius: 1rem; transition: all 0.2s ease; }
-        .btn-option:hover { border-color: #6366f1; background: #eef2ff; transform: translateY(-2px); }
+        
+        .btn-option {
+            background: #f8fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 1rem;
+            transition: all 0.2s ease;
+        }
+        .btn-option:hover {
+            border-color: #6366f1;
+            background: #eef2ff;
+            transform: translateY(-2px);
+        }
         .btn-option:active { transform: scale(0.98); }
-        .tab-active { background: #6366f1; color: white; box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39); }
-        .tab-inactive { background: white; color: #6b7280; border: 2px solid #e5e7eb; }
+
+        .tab-active { 
+            background: #6366f1; 
+            color: white; 
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+        }
+        .tab-inactive { 
+            background: white; 
+            color: #6b7280; 
+            border: 2px solid #e5e7eb;
+        }
         .vocab-locked { background: #f1f5f9; color: #94a3b8; border: 2px dashed #cbd5e1; border-radius: 1rem;}
-        .vocab-unlocked { background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); color: #854d0e; border: 2px solid #facc15; font-weight: 800; border-radius: 1rem; }
+        .vocab-unlocked { 
+            background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); 
+            color: #854d0e; 
+            border: 2px solid #facc15; 
+            font-weight: 800; 
+            border-radius: 1rem;
+        }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .modal-backdrop { background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); }
-        .gradient-text { background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(to right, #6366f1, #ec4899); }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #6366f1, #ec4899);
+        }
     </style>
 </head>
 <body class="font-sans min-h-screen flex flex-col selection:bg-indigo-200">
 
+    <!-- HEADER -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-slate-200">
         <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
             <h1 class="font-display font-black text-2xl tracking-tight text-slate-800">
@@ -57,83 +109,190 @@
     </header>
 
     <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col items-center relative">
+        
+        <!-- ==================== SCREEN 1: LOGIN ==================== -->
         <div id="screen-login" class="w-full max-w-md game-card p-8 mt-12 text-center">
-            <div class="mb-8"><div class="text-5xl mb-4">💼</div><h2 class="font-display font-black text-3xl text-slate-800 mb-2">Welcome!</h2></div>
+            <div class="mb-8">
+                <div class="text-5xl mb-4">💼</div>
+                <h2 class="font-display font-black text-3xl text-slate-800 mb-2">Welcome!</h2>
+                <p class="text-sm font-semibold text-slate-500">Register to start your situational training and unlock skills for your application.</p>
+            </div>
+            
             <div id="login-form" class="hide">
                 <div id="student-login-box">
-                    <input type="text" id="input-name" placeholder="Enter Your Full Name" class="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 font-bold p-4 rounded-xl mb-4 focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="input-name" placeholder="Enter Your Full Name" class="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 font-bold p-4 rounded-xl mb-4 focus:outline-none focus:border-indigo-500 transition-colors">
                     <button onclick="loginUser('student')" class="w-full btn-primary p-4 font-black uppercase tracking-wider text-sm mb-6">Play as Candidate ▶</button>
                     <button onclick="toggleTeacherLogin()" class="text-xs text-slate-400 hover:text-indigo-500 font-bold uppercase tracking-wider">Teacher Access</button>
                 </div>
+
                 <div id="teacher-login-box" class="hide bg-slate-50 p-6 rounded-2xl border-2 border-slate-200">
+                    <p class="text-xs font-black text-slate-800 mb-4 uppercase">Admin Authentication</p>
                     <input type="password" id="input-password" placeholder="Enter Password" class="w-full bg-white border-2 border-slate-200 p-3 rounded-xl mb-4 text-sm focus:outline-none focus:border-indigo-500 font-bold">
-                    <button onclick="loginUser('teacher')" class="w-full bg-slate-800 text-white p-3 rounded-xl font-bold uppercase text-xs mb-3 hover:bg-slate-700">Login as Admin</button>
+                    <button onclick="loginUser('teacher')" class="w-full bg-slate-800 text-white p-3 rounded-xl font-bold uppercase text-xs mb-3 hover:bg-slate-700 transition-colors">Login as Admin</button>
                     <button onclick="toggleTeacherLogin()" class="w-full text-xs text-indigo-500 font-bold">Back to Candidate Login</button>
                 </div>
             </div>
             <div id="loading-spinner" class="text-center text-indigo-500 font-black animate-pulse">CONNECTING TO GAME SERVER...</div>
         </div>
 
+        <!-- ==================== SCREEN 2: STUDENT DASHBOARD ==================== -->
         <div id="screen-dashboard" class="w-full hide flex flex-col">
             <div class="flex justify-center space-x-4 mb-8">
                 <button onclick="switchTab('jobs')" id="tab-jobs" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-active">🎯 Job Board</button>
                 <button onclick="switchTab('assessments')" id="tab-assessments" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-inactive">🧠 Skill & Vocab Training</button>
             </div>
-            <div id="view-jobs" class="w-full"><div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+
+            <!-- VIEW A: JOB BOARD -->
+            <div id="view-jobs" class="w-full">
+                <div class="mb-8 text-center max-w-2xl mx-auto">
+                    <h2 class="font-display font-black text-3xl text-slate-800">Job Opportunities</h2>
+                    <p class="text-slate-500 font-semibold mt-2">Build your skills in the training tab. Once you meet the requirements, claim your role! <strong>(Max 1 job total. 6 slots per job)</strong>.</p>
+                </div>
+                <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- VIEW B: ASSESSMENTS, CHART & VOCAB -->
             <div id="view-assessments" class="w-full hide grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="flex flex-col gap-6">
-                    <div class="game-card p-8 text-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-                        <h3 class="font-display font-black text-3xl mb-2">Situational Training</h3>
-                        <p class="text-sm font-semibold text-indigo-100 mb-6">Face up to 5 scenarios. The action you choose builds different professional skills.</p>
-                        <button onclick="startQuiz()" class="bg-white text-indigo-600 px-8 py-4 rounded-full font-black uppercase tracking-wider hover:scale-105 transition-transform">Start Scenarios ▶</button>
+                    <!-- Big Training Button Card -->
+                    <div class="game-card p-8 text-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="text-5xl mb-4">🎮</div>
+                            <h3 class="font-display font-black text-3xl mb-2">Situational Training</h3>
+                            <p class="text-sm font-semibold text-indigo-100 mb-6 px-4">No wrong answers! Face 5 scenarios. The action you choose builds different professional skills.</p>
+                            <button onclick="startQuiz()" class="bg-white text-indigo-600 px-8 py-4 rounded-full font-black uppercase tracking-wider shadow-lg hover:scale-105 transition-transform">Start Scenarios ▶</button>
+                        </div>
                     </div>
+
+                    <!-- Vocab Vault -->
                     <div class="game-card p-6">
-                        <h3 class="font-display font-black text-xl text-slate-800 mb-4">🗝️ Vocab Vault</h3>
+                        <div class="flex items-center gap-2 mb-4 border-b border-slate-100 pb-2">
+                            <span class="text-2xl">🗝️</span>
+                            <h3 class="font-display font-black text-xl text-slate-800">Vocab Vault</h3>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-500 mb-4">Gain points in skills to unlock powerful words for your application letter.</p>
                         <div id="vocab-container" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
                     </div>
                 </div>
+
+                <!-- Radar Chart -->
                 <div class="game-card p-8 flex flex-col items-center justify-center">
                     <h3 class="font-display font-black text-xl mb-4 text-slate-800">Your Skill Matrix</h3>
-                    <div class="w-full max-w-[350px] aspect-square relative"><canvas id="skillChart"></canvas></div>
+                    <div class="w-full max-w-[350px] aspect-square relative">
+                        <canvas id="skillChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- ==================== SCREEN 3: TEACHER DASHBOARD ==================== -->
         <div id="screen-teacher" class="w-full hide flex flex-col gap-8">
-            <h2 class="font-display font-black text-3xl text-slate-800">Teacher Dashboard</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
+                <h2 class="font-display font-black text-3xl text-slate-800">Teacher Dashboard</h2>
+                <button onclick="resetGameData()" class="bg-red-100 text-red-600 border-2 border-red-200 px-4 py-2 rounded-xl font-bold text-sm hover:bg-red-500 hover:text-white transition-colors">⚠️ Reset All Data</button>
+            </div>
+            
             <div class="flex space-x-3 mb-4 bg-slate-200 p-1 rounded-xl self-start">
                 <button onclick="switchTeacherTab('students')" id="ttab-students" class="px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800">Student Progress</button>
                 <button onclick="switchTeacherTab('jobs')" id="ttab-jobs" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800">Job Config</button>
                 <button onclick="switchTeacherTab('questions')" id="ttab-questions" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800">Question Editor</button>
             </div>
-            <div id="tview-students" class="game-card p-6 overflow-hidden"><table class="w-full text-left border-collapse"><thead><tr class="bg-slate-50 text-xs uppercase text-slate-500 font-black"><th class="p-4">Candidate</th><th class="p-4">IT 💻</th><th class="p-4">Num 🧮</th><th class="p-4">Lang 🗣️</th><th class="p-4">EQ 🤝</th><th class="p-4">Lead 👑</th><th class="p-4">Crea 🎨</th></tr></thead><tbody id="teacher-students-list" class="text-sm font-semibold text-slate-700"></tbody></table></div>
-            <div id="tview-jobs" class="hide game-card p-6"><div id="teacher-jobs-config" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+
+            <!-- T-View: Students -->
+            <div id="tview-students" class="game-card p-6 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-xs uppercase text-slate-500 font-black tracking-wider">
+                                <th class="p-4 rounded-tl-xl">Rank / Candidate</th>
+                                <th class="p-4">IT 💻</th><th class="p-4">Num 🧮</th>
+                                <th class="p-4">Lang 🗣️</th><th class="p-4">EQ 🤝</th>
+                                <th class="p-4">Lead 👑</th><th class="p-4">Crea 🎨</th>
+                                <th class="p-4 rounded-tr-xl text-indigo-500">Total 🏆</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-students-list" class="text-sm font-semibold text-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- T-View: Jobs -->
+            <div id="tview-jobs" class="hide game-card p-6">
+                <div id="teacher-jobs-config" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- T-View: Questions -->
             <div id="tview-questions" class="hide game-card p-6 flex flex-col">
-                <button onclick="addNewQuestion()" class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-emerald-600 self-end mb-4">+ New Scenario</button>
+                <div class="flex justify-between items-center mb-6">
+                    <p class="text-sm font-semibold text-slate-500">Edit scenarios. The skill chosen gets +2 points.</p>
+                    <button onclick="addNewQuestion()" class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-emerald-600 transition-colors">+ New Scenario</button>
+                </div>
                 <div id="teacher-questions-list" class="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-4"></div>
             </div>
         </div>
 
+        <!-- ==================== SCREEN 4: QUIZ (SCENARIOS) ==================== -->
         <div id="screen-quiz" class="w-full max-w-3xl game-card p-8 mt-6 hide">
-            <h2 class="font-display font-black text-2xl text-slate-800 mb-8">Workplace Scenario <span id="quiz-progress" class="text-indigo-500 ml-4"></span></h2>
-            <div class="bg-slate-50 rounded-2xl p-8 mb-8 border-2 border-slate-100"><p id="quiz-question" class="text-2xl text-slate-800 font-bold leading-relaxed"></p></div>
-            <div id="quiz-options" class="flex flex-col gap-4"></div>
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-display font-black text-2xl text-slate-800">Workplace Scenario</h2>
+                <div class="text-sm bg-indigo-100 text-indigo-700 font-black px-4 py-2 rounded-full">Scenario <span id="quiz-progress">1/5</span></div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-2xl p-8 mb-8 border-2 border-slate-100">
+                <p id="quiz-question" class="text-2xl text-slate-800 font-bold leading-relaxed"></p>
+            </div>
+            
+            <p class="text-xs text-slate-500 font-black uppercase tracking-wider mb-3 px-2">How do you handle this?</p>
+            <div id="quiz-options" class="flex flex-col gap-4">
+                <!-- Options injected via JS -->
+            </div>
         </div>
+
+        <!-- ==================== SCREEN 5: RESULTS ==================== -->
         <div id="screen-result" class="w-full max-w-md game-card p-8 mt-12 text-center hide">
-            <h2 class="font-display font-black text-3xl text-slate-800 mb-8">Training Complete!</h2>
-            <div id="result-breakdown" class="flex flex-col gap-3 mb-8 text-left bg-slate-50 p-6 rounded-2xl border-2 border-slate-100"></div>
+            <div class="text-6xl mb-4">🎉</div>
+            <h2 class="font-display font-black text-3xl text-slate-800 mb-2">Training Complete!</h2>
+            <p class="text-sm font-semibold text-slate-500 mb-8">Based on your decisions, your professional profile leveled up in these areas:</p>
+            
+            <div id="result-breakdown" class="flex flex-col gap-3 mb-8 text-left bg-slate-50 p-6 rounded-2xl border-2 border-slate-100">
+                <!-- Injected via JS -->
+            </div>
+
             <button onclick="returnToDashboard()" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm tracking-wider">Return to Training</button>
         </div>
 
+        <!-- ==================== MODAL: FINAL BOSS WRITING PROMPT ==================== -->
         <div id="modal-final-boss" class="hide fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
             <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-8 relative overflow-y-auto max-h-[90vh] border-4 border-indigo-500">
-                <h2 class="font-display font-black text-4xl gradient-text mb-2">Mission Accomplished!</h2>
-                <p class="text-lg font-bold text-slate-700 mb-6">You secured a slot as <strong id="fb-job-title" class="text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg"></strong>.</p>
-                <div class="bg-slate-50 border-2 border-slate-100 rounded-2xl p-6 mb-6 space-y-6">
-                    <div><p class="text-sm font-black text-indigo-500 uppercase mb-2">1 Understand the Job</p><p id="fb-job-desc" class="text-sm text-slate-600 font-bold bg-white p-4 border-2 border-slate-200 rounded-xl"></p></div>
-                    <div><p class="text-sm font-black text-pink-500 uppercase mb-2">2 Prove Your "Experience"</p><ul id="fb-experiences" class="list-none text-sm text-slate-700 font-bold space-y-2 bg-white p-4 border-2 border-slate-200 rounded-xl"></ul></div>
-                    <div><p class="text-sm font-black text-teal-500 uppercase mb-2">3 Use Targeted Vocabulary</p><div id="fb-vocab-list" class="flex flex-wrap gap-2 text-sm"></div></div>
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                
+                <h2 class="font-display font-black text-4xl gradient-text mb-2 pt-2">Mission Accomplished!</h2>
+                <p class="text-lg font-bold text-slate-700 mb-6">You have secured a slot as the <strong id="fb-job-title" class="text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg"></strong>.</p>
+                
+                <div class="bg-slate-50 border-2 border-slate-100 rounded-2xl p-6 mb-6">
+                    <h3 class="font-black text-sm uppercase tracking-widest text-slate-400 mb-2">Final Boss: Application Letter</h3>
+                    <p class="text-slate-700 font-semibold mb-6">To complete your hiring, write a professional Letter of Application.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-sm font-black text-indigo-500 uppercase tracking-wide mb-2 flex items-center gap-2"><span class="bg-indigo-100 p-1 rounded">1</span> Understand the Job</p>
+                            <p id="fb-job-desc" class="text-sm text-slate-600 font-bold bg-white p-4 border-2 border-slate-200 rounded-xl"></p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-black text-pink-500 uppercase tracking-wide mb-2 flex items-center gap-2"><span class="bg-pink-100 p-1 rounded">2</span> Prove Your "Experience"</p>
+                            <p class="text-sm text-slate-500 font-semibold mb-3">You proved your skills in the training. Mention these exact experiences in your letter:</p>
+                            <ul id="fb-experiences" class="list-none text-sm text-slate-700 font-bold space-y-2 bg-white p-4 border-2 border-slate-200 rounded-xl"></ul>
+                        </div>
+                        
+                        <div>
+                            <p class="text-sm font-black text-teal-500 uppercase tracking-wide mb-2 flex items-center gap-2"><span class="bg-teal-100 p-1 rounded">3</span> Use Targeted Vocabulary</p>
+                            <p class="text-sm text-slate-500 font-semibold mb-3">Here are special words you unlocked that are perfect for this job. Try to use at least <strong>three</strong>:</p>
+                            <div id="fb-vocab-list" class="flex flex-wrap gap-2 text-sm"></div>
+                        </div>
+                    </div>
                 </div>
+
                 <button onclick="document.getElementById('modal-final-boss').classList.add('hide')" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm">Close & Start Writing ✍️</button>
             </div>
         </div>
@@ -144,10 +303,10 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =====================================================================
-        // RESTORED ENVIRONMENT VARIABLES FOR CANVAS PLAYGROUND
+        // ENVIRONMENT VARIABLES
         // =====================================================================
         const firebaseConfig = {
   apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI",
@@ -175,6 +334,7 @@
             leadership: "👑 Taking charge when things break and organizing the team.", creativity: "🎨 Inventing fun new ideas and designing cool posters."
         };
 
+        // ALL 6 JOBS RESTORED
         const defaultJobs = [
             { id: 1, title: "Bubble Tea 'Shaker'", salary: "HK$14k - $17k / mo", desc: "Handle customers, calculate orders, lead trainees.", req: { numeracy: 4, interpersonal: 4, leadership: 2, it: 0, language: 0, creativity: 0 }, claimedBy: [] },
             { id: 2, title: "Instagram Admin", salary: "HK$15k - $18k / mo", desc: "Design memes, edit reels, write catchy English copy.", req: { it: 4, creativity: 4, language: 4, numeracy: 0, interpersonal: 0, leadership: 0 }, claimedBy: [] },
@@ -184,7 +344,7 @@
             { id: 6, title: "Escape Room Actor", salary: "HK$14k - $16k / mo", desc: "Act creatively, override tech systems, ensure group safety.", req: { creativity: 4, it: 4, leadership: 4, numeracy: 0, language: 0, interpersonal: 0 }, claimedBy: [] }
         ];
 
-        // Restored all 10 questions to prevent running out of scenarios too quickly
+        // 10 DEFAULT QUESTIONS
         const defaultQuestions = [
             { q: "😡 A customer is very angry because their drink is 15 minutes late. What do you do?", options: [{ text: "🙏 Say sorry nicely and listen to them.", skill: "interpersonal" }, { text: "🧮 Quickly calculate a 20% discount on their bill.", skill: "numeracy" }, { text: "💡 Offer them a special, secret drink you just invented.", skill: "creativity" }] },
             { q: "📶 The shop's WiFi stops working when it is very busy!", options: [{ text: "💻 Restart the router and fix the internet settings.", skill: "it" }, { text: "👑 Tell the staff what to do and take control.", skill: "leadership" }, { text: "✍️ Write a polite English sign to tell the customers.", skill: "language" }] },
@@ -207,6 +367,7 @@
         let activeJobsList = []; let questionBank = []; let skillChartObj = null;
         let currentQuizQuestions = []; let currentQuestionIndex = 0; let currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
 
+        // UI Routing
         window.switchScreen = (h, s) => { document.getElementById(h).classList.add('hide'); document.getElementById(s).classList.remove('hide'); }
         window.toggleTeacherLogin = () => { document.getElementById('student-login-box').classList.toggle('hide'); document.getElementById('teacher-login-box').classList.toggle('hide'); }
         window.switchTab = (tab) => {
@@ -223,15 +384,16 @@
             });
         }
 
+        // Firebase Auth & Listeners
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
                 onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), (sysDoc) => {
-                    // Auto-repair the database if it accidentally saved fewer than 6 jobs
+                    // AUTO-REPAIR: If no jobs or less than 6 jobs exist, inject the default 6 jobs.
                     if (!sysDoc.exists() || (sysDoc.data().jobs && sysDoc.data().jobs.length < 6)) {
                         setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: defaultJobs });
                     } else { 
-                        activeJobsList = sysDoc.data().jobs || defaultJobs; 
+                        activeJobsList = sysDoc.data().jobs; 
                         if(userData.role === 'student') updateStudentJobBoard(); 
                         if(userData.role === 'teacher') renderTeacherJobsConfig(); 
                     }
@@ -264,7 +426,9 @@
             switchScreen('screen-login', 'screen-dashboard'); initChart(); updateStudentDashboard(); switchTab('jobs');
         }
 
+        // --- STUDENT LOGIC ---
         function updateStudentDashboard() { updateChart(); updateStudentJobBoard(); renderVocabulary(); }
+        
         function renderVocabulary() {
             const container = document.getElementById('vocab-container'); container.innerHTML = '';
             const skills = { it: 'IT 💻', numeracy: 'Num 🧮', language: 'Lang 🗣️', interpersonal: 'EQ 🤝', leadership: 'Lead 👑', creativity: 'Creat 🎨' };
@@ -280,25 +444,55 @@
         window.updateStudentJobBoard = () => {
             const container = document.getElementById("job-grid"); if (!container) return; container.innerHTML = '';
             const userClaimedAny = activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid));
+            
             activeJobsList.forEach((job, index) => {
                 const isUnlocked = Object.keys(job.req).every(k => userData.scores[k] >= job.req[k]);
                 const hasClaimed = job.claimedBy.some(c => c.uid === currentUser.uid);
                 const isFull = job.claimedBy.length >= 6;
                 let reqHtml = '', slotsHtml = '<ul class="space-y-2 mt-2">';
                 const labels = { it: 'IT 💻', numeracy: 'Num 🧮', language: 'Lang 🗣️', interpersonal: 'EQ 🤝', leadership: 'Lead 👑', creativity: 'Creat 🎨' };
-                for (let key in job.req) if (job.req[key] > 0) reqHtml += `<span class="text-xs px-2 py-1 rounded-lg border-2 font-bold ${userData.scores[key] >= job.req[key] ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">${labels[key]} ${userData.scores[key]}/${job.req[key]}</span>`;
+                
+                for (let key in job.req) {
+                    if (job.req[key] > 0) {
+                        const hasSkill = userData.scores[key] >= job.req[key];
+                        reqHtml += `<span class="text-xs px-2 py-1 rounded-lg border-2 font-bold ${hasSkill ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">${labels[key]} ${userData.scores[key]}/${job.req[key]}</span>`;
+                    }
+                }
+
                 for(let i=0; i<6; i++) {
-                    if (job.claimedBy[i]) slotsHtml += `<li class="text-xs p-2 rounded-lg font-bold flex justify-between items-center ${job.claimedBy[i].uid === currentUser.uid ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-50'}"><span>👤 ${job.claimedBy[i].name}</span></li>`;
+                    if (job.claimedBy[i]) slotsHtml += `<li class="text-xs p-2 rounded-lg font-bold flex justify-between items-center ${job.claimedBy[i].uid === currentUser.uid ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-200' : 'bg-slate-50 text-slate-700 border-2 border-slate-100'}"><span>👤 ${job.claimedBy[i].name}</span></li>`;
                     else slotsHtml += `<li class="text-xs border-2 border-dashed border-slate-200 text-slate-400 p-2 rounded-lg font-bold">⭕ Slot ${i+1} Open</li>`;
                 }
                 slotsHtml += '</ul>';
-                let actionBtn = hasClaimed ? `<div class="mt-4"><div class="w-full bg-emerald-500 text-white text-center py-3 rounded-xl text-sm font-black uppercase mb-2">✓ Requirements Met</div><button onclick="triggerFinalBossModal(${index})" class="w-full bg-slate-800 text-white py-3 rounded-xl text-sm font-black uppercase">View Mission Prompt</button></div>` : userClaimedAny ? `<div class="w-full bg-slate-200 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">1 Job Limit Reached</div>` : isFull ? `<div class="w-full bg-slate-200 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">All Slots Filled</div>` : isUnlocked ? `<button onclick="claimJob(${index})" class="w-full btn-primary py-3 rounded-xl text-sm font-black uppercase tracking-wider mt-4">Claim Role ▶</button>` : `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">Requirements Not Met</div>`;
-                container.innerHTML += `<div class="game-card p-6 flex flex-col justify-between ${isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : ''}"><div><h4 class="font-display font-black text-xl mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl mb-4"><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div>${slotsHtml}${actionBtn}</div></div>`;
+
+                let actionBtn = '';
+                if (hasClaimed) {
+                    actionBtn = `
+                        <div class="flex flex-col gap-2 mt-4">
+                            <div class="w-full bg-emerald-500 text-white text-center py-3 rounded-xl text-sm font-black uppercase tracking-wider">✓ Requirements Met</div>
+                            <button onclick="triggerFinalBossModal(${index})" class="w-full bg-slate-800 text-white px-3 py-3 rounded-xl text-sm font-black uppercase hover:bg-slate-700 transition-colors">View Mission Prompt</button>
+                        </div>
+                    `;
+                } else if (userClaimedAny) {
+                    actionBtn = `<div class="w-full bg-slate-200 text-slate-500 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-300">1 Job Limit Reached</div>`;
+                } else if (isFull) {
+                    actionBtn = `<div class="w-full bg-slate-200 text-slate-500 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-300">All Slots Filled</div>`;
+                } else if (isUnlocked) {
+                    actionBtn = `<button onclick="claimJob(${index})" class="w-full btn-primary py-3 rounded-xl text-sm font-black uppercase tracking-wider mt-4">Claim Role ▶</button>`;
+                } else {
+                    actionBtn = `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200">Requirements Not Met</div>`;
+                }
+
+                container.innerHTML += `<div class="game-card p-6 flex flex-col justify-between relative ${isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : 'border-slate-100'}"><div><h4 class="font-display font-black text-xl text-slate-800 mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold text-slate-600 mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4"><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Required Skills:</p><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Candidate Slots (Max 6):</p>${slotsHtml}${actionBtn}</div></div>`;
             });
         };
 
         window.claimJob = async (jobIndex) => {
-            if (!currentUser || activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid))) return;
+            if (!currentUser) return;
+            if (activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid))) return alert("You can only claim 1 job.");
+            const job = activeJobsList[jobIndex];
+            if (job.claimedBy.length >= 6 || job.claimedBy.some(c => c.uid === currentUser.uid)) return;
+
             const newJobs = [...activeJobsList]; newJobs[jobIndex].claimedBy.push({ uid: currentUser.uid, name: userData.name });
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); triggerFinalBossModal(jobIndex); } catch (e) { console.error(e); }
         };
@@ -306,62 +500,64 @@
         window.triggerFinalBossModal = (jobIndex) => {
             const job = activeJobsList[jobIndex];
             document.getElementById('fb-job-title').innerText = job.title; document.getElementById('fb-job-desc').innerText = `"${job.desc}"`;
-            let expHtml = ""; for (let skill in job.req) if (job.req[skill] > 0) expHtml += `<li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> ${SKILL_EXPERIENCES[skill]}</li>`;
+            
+            let expHtml = ""; 
+            for (let skill in job.req) {
+                if (job.req[skill] > 0) expHtml += `<li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> ${SKILL_EXPERIENCES[skill]}</li>`;
+            }
             document.getElementById('fb-experiences').innerHTML = expHtml;
+
+            let unlockedWords = [];
+            for (let skill in job.req) {
+                if (job.req[skill] > 0) {
+                    for (let threshold in POWER_VOCAB[skill]) {
+                        if (userData.scores[skill] >= parseInt(threshold)) unlockedWords.push(POWER_VOCAB[skill][threshold]);
+                    }
+                }
+            }
+            
             const vocabContainer = document.getElementById('fb-vocab-list'); vocabContainer.innerHTML = '';
-            let unlocked = []; for (let s in job.req) if(job.req[s]>0) for(let t in POWER_VOCAB[s]) if(userData.scores[s]>=parseInt(t)) unlocked.push(POWER_VOCAB[s][t]);
-            if (unlocked.length === 0) vocabContainer.innerHTML = '<span class="text-slate-400 italic">No special vocabulary unlocked yet. Complete more training!</span>';
-            else unlocked.forEach(w => vocabContainer.innerHTML += `<span class="bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-200 text-teal-800 font-bold px-3 py-1.5 rounded-xl">${w}</span>`);
+            if (unlockedWords.length === 0) {
+                vocabContainer.innerHTML = '<span class="text-slate-400 font-semibold italic">No special vocabulary unlocked yet. Complete more training!</span>';
+            } else {
+                unlockedWords.forEach(w => vocabContainer.innerHTML += `<span class="bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-200 text-teal-800 font-bold px-3 py-1.5 rounded-xl shadow-sm">${w}</span>`);
+            }
             document.getElementById('modal-final-boss').classList.remove('hide');
         }
 
         window.startQuiz = () => {
-            // Retrieve up to 5 questions, but handle gracefully if there are fewer
             currentQuizQuestions = [...questionBank].sort(() => 0.5 - Math.random()).slice(0, 5); 
-            if (currentQuizQuestions.length === 0) {
-                alert("No scenarios available in the question bank. Please ask your teacher to add some.");
-                return;
-            }
-            currentQuestionIndex = 0;
-            currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
+            if (currentQuizQuestions.length === 0) return alert("No scenarios available.");
+            currentQuestionIndex = 0; currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
             switchScreen('screen-dashboard', 'screen-quiz'); renderQuizQuestion();
         }
 
         function renderQuizQuestion() {
             const qObj = currentQuizQuestions[currentQuestionIndex];
-            
-            // Dynamic progression based on the actual number of questions loaded
             document.getElementById("quiz-progress").innerText = `${currentQuestionIndex + 1}/${currentQuizQuestions.length}`; 
             document.getElementById("quiz-question").innerText = `"${qObj.q}"`;
-            
             const optsContainer = document.getElementById("quiz-options"); optsContainer.innerHTML = '';
             [...qObj.options].sort(() => 0.5 - Math.random()).forEach(opt => {
                 const btn = document.createElement("button"); btn.className = "btn-option w-full text-left p-5 font-bold text-slate-700 text-lg"; btn.innerText = opt.text;
                 btn.onclick = () => { 
-                    currentRoundGains[opt.skill] += 2; 
-                    currentQuestionIndex++; 
-                    
-                    // Proceed only if the index is strictly less than the available number of questions
-                    if (currentQuestionIndex < currentQuizQuestions.length) {
-                        renderQuizQuestion();
-                    } else {
-                        finishQuiz();
-                    }
+                    currentRoundGains[opt.skill] += 2; currentQuestionIndex++; 
+                    if (currentQuestionIndex < currentQuizQuestions.length) renderQuizQuestion();
+                    else finishQuiz();
                 };
                 optsContainer.appendChild(btn);
             });
         }
 
         async function finishQuiz() {
-            let breakdownHtml = ""; const labels = { it: 'IT', numeracy: 'Numeracy', language: 'Language', interpersonal: 'Interpersonal', leadership: 'Leadership', creativity: 'Creativity' };
+            let breakdownHtml = ""; const labels = { it: 'IT 💻', numeracy: 'Numeracy 🧮', language: 'Language 🗣️', interpersonal: 'Interpersonal 🤝', leadership: 'Leadership 👑', creativity: 'Creativity 🎨' };
             for (let skill in currentRoundGains) {
                 if (currentRoundGains[skill] > 0) {
                     userData.scores[skill] = Math.min(20, userData.scores[skill] + currentRoundGains[skill]);
-                    breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 font-black">+${currentRoundGains[skill]}</span></div>`;
+                    breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg font-black text-lg">+${currentRoundGains[skill]}</span></div>`;
                 }
             }
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid), { scores: userData.scores }); } catch (e) {}
-            document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500'>No points gained.</p>"; switchScreen('screen-quiz', 'screen-result');
+            document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500 text-center'>No points gained.</p>"; switchScreen('screen-quiz', 'screen-result');
         }
 
         window.returnToDashboard = () => { updateStudentDashboard(); switchScreen('screen-result', 'screen-dashboard'); switchTab('assessments'); }
@@ -369,16 +565,48 @@
         function initChart() {
             skillChartObj = new Chart(document.getElementById('skillChart').getContext('2d'), {
                 type: 'radar',
-                data: { labels: ['IT', 'Num', 'Lang', 'EQ', 'Lead', 'Creat'], datasets: [{ data: [0,0,0,0,0,0], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: '#6366f1', borderWidth: 3 }] },
-                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 20, ticks: { display: false } } }, plugins: { legend: { display: false } } }
+                data: { labels: ['IT', 'Num', 'Lang', 'EQ', 'Lead', 'Creat'], datasets: [{ data: [0,0,0,0,0,0], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: '#6366f1', pointBackgroundColor: '#ec4899', pointBorderColor: '#fff', borderWidth: 3 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 20, ticks: { display: false, stepSize: 4 }, pointLabels: { font: { size: 13, weight: '800' }, color: '#475569' } } }, plugins: { legend: { display: false } } }
             });
         }
         function updateChart() { if (skillChartObj) { skillChartObj.data.datasets[0].data = [ userData.scores.it, userData.scores.numeracy, userData.scores.language, userData.scores.interpersonal, userData.scores.leadership, userData.scores.creativity ]; skillChartObj.update(); } }
 
+        // --- TEACHER DASHBOARD LOGIC ---
         function initTeacherDashboard() {
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snapshot) => {
                 const tbody = document.getElementById('teacher-students-list'); tbody.innerHTML = '';
-                snapshot.forEach(doc => { const u = doc.data(); if(u.role === 'student') tbody.innerHTML += `<tr class="border-b"><td class="p-4 font-black">${u.name}</td><td class="p-4">${u.scores.it}</td><td class="p-4">${u.scores.numeracy}</td><td class="p-4">${u.scores.language}</td><td class="p-4">${u.scores.interpersonal}</td><td class="p-4">${u.scores.leadership}</td><td class="p-4">${u.scores.creativity}</td></tr>`; });
+                
+                let students = [];
+                snapshot.forEach(doc => {
+                    const u = doc.data();
+                    if(u.role === 'student') {
+                        const s = u.scores;
+                        const total = (s.it||0) + (s.numeracy||0) + (s.language||0) + (s.interpersonal||0) + (s.leadership||0) + (s.creativity||0);
+                        students.push({ ...u, totalScore: total });
+                    }
+                });
+
+                // Sort students by total skills (Highest first)
+                students.sort((a, b) => b.totalScore - a.totalScore);
+
+                students.forEach((u, index) => {
+                    const s = u.scores; 
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-black text-indigo-600 flex items-center gap-2">
+                                <span class="bg-slate-200 text-slate-500 rounded-full w-6 h-6 flex items-center justify-center text-xs">${index + 1}</span>
+                                ${u.name}
+                            </td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.it}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.numeracy}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.language}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.interpersonal}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.leadership}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.creativity}</span></td>
+                            <td class="p-4 font-black text-emerald-500">${u.totalScore}</td>
+                        </tr>
+                    `; 
+                });
             });
             renderTeacherJobsConfig(); renderTeacherQuestions();
         }
@@ -386,8 +614,8 @@
         window.renderTeacherJobsConfig = () => {
             const container = document.getElementById('teacher-jobs-config'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             activeJobsList.forEach((job, index) => {
-                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col"><label class="text-[9px] uppercase">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="20" class="border p-1"></div>`);
-                container.innerHTML += `<div class="bg-slate-50 p-5 rounded-2xl"><div class="flex justify-between mb-2"><h4>${job.title}</h4><button onclick="saveJobConfig(${index})" class="bg-indigo-500 text-white px-2 rounded">Save</button></div><div class="grid grid-cols-3 gap-2">${inputsHtml}</div></div>`;
+                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="20" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);
+                container.innerHTML += `<div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-100"><div class="flex justify-between items-center mb-4"><h4 class="font-display font-black text-slate-800 truncate pr-2">${job.title}</h4><button onclick="saveJobConfig(${index})" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-600 transition-colors">Save</button></div><div class="grid grid-cols-3 gap-2">${inputsHtml}</div></div>`;
             });
         }
         window.saveJobConfig = async (index) => { const newJobs = [...activeJobsList]; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => newJobs[index].req[k] = parseInt(document.getElementById(`job-${index}-${k}`).value) || 0); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); } catch (e) {} }
@@ -395,13 +623,35 @@
         window.renderTeacherQuestions = () => {
             const container = document.getElementById('teacher-questions-list'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             questionBank.forEach((q, index) => {
-                let optsHtml = ''; q.options.forEach((opt, oIdx) => optsHtml += `<div class="flex gap-2 mb-1"><input type="text" id="q-${index}-opt-${oIdx}" value="${opt.text}" class="border p-1 flex-grow"><select id="q-${index}-skill-${oIdx}" class="border">${['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].map(s => `<option value="${s}" ${s===opt.skill?'selected':''}>${s}</option>`).join('')}</select></div>`);
-                container.innerHTML += `<div class="border p-4 mb-4 relative"><button onclick="deleteQuestion(${index})" class="absolute top-2 right-2 text-red-500">✕</button><textarea id="q-${index}-text" class="w-full border p-2 mb-2">${q.q}</textarea>${optsHtml}<button onclick="saveQuestion(${index})" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded mt-2">Save</button></div>`;
+                let optsHtml = ''; q.options.forEach((opt, oIdx) => optsHtml += `<div class="flex gap-2 items-center bg-slate-50 p-2 rounded-xl border border-slate-200"><input type="text" id="q-${index}-opt-${oIdx}" value="${opt.text}" class="flex-grow bg-transparent focus:outline-none font-semibold text-sm px-2"><select id="q-${index}-skill-${oIdx}" class="bg-white border-2 border-slate-200 rounded-lg p-1.5 text-xs font-bold text-indigo-600 focus:outline-none">${['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].map(s => `<option value="${s}" ${s===opt.skill?'selected':''}>${s.toUpperCase()}</option>`).join('')}</select></div>`);
+                container.innerHTML += `<div class="bg-white border-2 border-slate-100 rounded-2xl p-5 relative"><button onclick="deleteQuestion(${index})" class="absolute top-4 right-4 bg-red-100 text-red-500 w-8 h-8 rounded-full font-black hover:bg-red-500 hover:text-white transition-colors">✕</button><label class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 block">Scenario ${index+1}</label><textarea id="q-${index}-text" class="w-full border-2 border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-700 mb-4 focus:border-indigo-500 outline-none transition-colors" rows="2">${q.q}</textarea><div class="flex flex-col gap-3 mb-4">${optsHtml}</div><button onclick="saveQuestion(${index})" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl text-xs font-black hover:bg-indigo-600 hover:text-white transition-colors">Save Scenario Updates</button></div>`;
             });
         }
         window.saveQuestion = async (index) => { const newBank = [...questionBank]; newBank[index].q = document.getElementById(`q-${index}-text`).value; for(let i=0; i<3; i++) { newBank[index].options[i].text = document.getElementById(`q-${index}-opt-${i}`).value; newBank[index].options[i].skill = document.getElementById(`q-${index}-skill-${i}`).value; } try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); alert("Saved"); } catch(e) {} }
-        window.addNewQuestion = async () => { const newBank = [{ q: "New scenario...", options: [{text:"Option A", skill:"it"}, {text:"Option B", skill:"numeracy"}, {text:"Option C", skill:"language"}] }, ...questionBank]; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
-        window.deleteQuestion = async (index) => { if(!confirm("Delete?")) return; const newBank = [...questionBank]; newBank.splice(index, 1); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
+        window.addNewQuestion = async () => { const newBank = [{ q: "✏️ Write your new scenario here...", options: [{text:"Option A", skill:"it"}, {text:"Option B", skill:"numeracy"}, {text:"Option C", skill:"language"}] }, ...questionBank]; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
+        window.deleteQuestion = async (index) => { if(!confirm("Delete this scenario permanently?")) return; const newBank = [...questionBank]; newBank.splice(index, 1); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
+
+        // --- RESET DATA FUNCTION ---
+        window.resetGameData = async () => {
+            if(!confirm("⚠️ Are you SURE you want to erase all student progress and clear all job claims? This cannot be undone.")) return;
+
+            try {
+                // 1. Reset all job claims
+                const resetJobs = activeJobsList.map(job => ({ ...job, claimedBy: [] }));
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: resetJobs });
+
+                // 2. Delete all user documents
+                const usersSnapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'users'));
+                usersSnapshot.forEach(async (userDoc) => {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', userDoc.id));
+                });
+
+                alert("✅ Game data has been completely wiped. Ready for the next class!");
+            } catch(e) {
+                console.error("Error resetting data:", e);
+                alert("Failed to reset data.");
+            }
+        }
 
         const initAuth = async () => {
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
