@@ -155,7 +155,7 @@
                     <p class="text-sm font-semibold text-slate-500">Fully edit the title, description, available slots, and required skills for each role.</p>
                     <button onclick="addNewJob()" class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-emerald-600 transition-colors">+ New Job Listing</button>
                 </div>
-                <div id="teacher-jobs-config"></div>
+                <div id="teacher-jobs-config" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
 
             <!-- T-View: Questions -->
@@ -211,7 +211,7 @@
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
+       const firebaseConfig = {
   apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI",
   authDomain: "career-quest-87d67.firebaseapp.com",
   projectId: "career-quest-87d67",
@@ -366,7 +366,7 @@
             const container = document.getElementById("job-grid"); if (!container) return; container.innerHTML = '';
             const userClaimedAny = activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid));
             
-            let gridHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">';
+            let gridHtml = '';
 
             activeJobsList.forEach((job, index) => {
                 const isUnlocked = Object.keys(job.req).every(k => userData.scores[k] >= job.req[k]);
@@ -409,7 +409,6 @@
 
                 gridHtml += `<div class="game-card p-6 flex flex-col justify-between relative ${isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : 'border-slate-100'}"><div><h4 class="font-display font-black text-xl text-slate-800 mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold text-slate-600 mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4"><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Required Skills:</p><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Candidate Slots (Max ${jobMaxSlots}):</p>${slotsHtml}${actionBtn}</div></div>`;
             });
-            gridHtml += '</div>';
             container.innerHTML = gridHtml;
         };
 
@@ -536,7 +535,7 @@
         window.renderTeacherJobsConfig = () => {
             const container = document.getElementById('teacher-jobs-config'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             
-            let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">';
+            let html = '';
             activeJobsList.forEach((job, index) => {
                 let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="20" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);
                 const jobMaxSlots = job.maxSlots || 6;
@@ -561,7 +560,6 @@
                         <button onclick="saveJobConfig(${index})" class="w-full bg-slate-800 text-white px-3 py-3 rounded-xl font-black uppercase tracking-wider text-xs hover:bg-indigo-600 transition-colors">Save Updates</button>
                     </div>`;
             });
-            html += '</div>';
             container.innerHTML = html;
         }
 
