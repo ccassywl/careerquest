@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiu Chow Career Quest</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Gamified Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'sans': ['Nunito', 'sans-serif'], 'display': ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f0fdf4; background-image: radial-gradient(#e2e8f0 2px, transparent 2px); background-size: 30px 30px; color: #1f2937; }
+        .hide { display: none !important; }
+        .game-card { background: white; border-radius: 1.5rem; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+        .game-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12); }
+        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border-radius: 9999px; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-primary:active { transform: scale(0.96); }
+        .btn-primary:hover { box-shadow: 0 10px 20px -10px rgba(99,102,241,0.5); transform: translateY(-2px); }
+        .btn-option { background: #f8fafc; border: 3px solid #e2e8f0; border-radius: 1rem; transition: all 0.2s ease; }
+        .btn-option:hover { border-color: #6366f1; background: #eef2ff; transform: translateY(-2px); }
+        .btn-option:active { transform: scale(0.98); }
+        .tab-active { background: #6366f1; color: white; box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39); }
+        .tab-inactive { background: white; color: #6b7280; border: 2px solid #e5e7eb; }
+        .vocab-locked { background: #f1f5f9; color: #94a3b8; border: 2px dashed #cbd5e1; border-radius: 1rem;}
+        .vocab-unlocked { background: linear-gradient(135deg, #fef08a 0%, #fde047 100%); color: #854d0e; border: 2px solid #facc15; font-weight: 800; border-radius: 1rem; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .modal-backdrop { background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); }
+        .gradient-text { background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-image: linear-gradient(to right, #6366f1, #ec4899); }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col selection:bg-indigo-200">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+            <h1 class="font-display font-black text-2xl tracking-tight text-slate-800">
+                🚀 Career<span class="text-indigo-500">Quest</span>
+            </h1>
+            <div id="header-user" class="hidden flex items-center gap-3 bg-slate-100 px-4 py-2 rounded-full border border-slate-200">
+                <span id="role-badge" class="bg-indigo-500 text-white text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider"></span>
+                <span id="display-name" class="font-bold text-slate-700 text-sm"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col items-center relative">
+        <div id="screen-login" class="w-full max-w-md game-card p-8 mt-12 text-center">
+            <div class="mb-8"><div class="text-5xl mb-4">💼</div><h2 class="font-display font-black text-3xl text-slate-800 mb-2">Welcome!</h2></div>
+            <div id="login-form" class="hide">
+                <div id="student-login-box">
+                    <input type="text" id="input-name" placeholder="Enter Your Full Name" class="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 font-bold p-4 rounded-xl mb-4 focus:outline-none focus:border-indigo-500">
+                    <button onclick="loginUser('student')" class="w-full btn-primary p-4 font-black uppercase tracking-wider text-sm mb-6">Play as Candidate ▶</button>
+                    <button onclick="toggleTeacherLogin()" class="text-xs text-slate-400 hover:text-indigo-500 font-bold uppercase tracking-wider">Teacher Access</button>
+                </div>
+                <div id="teacher-login-box" class="hide bg-slate-50 p-6 rounded-2xl border-2 border-slate-200">
+                    <input type="password" id="input-password" placeholder="Enter Password" class="w-full bg-white border-2 border-slate-200 p-3 rounded-xl mb-4 text-sm focus:outline-none focus:border-indigo-500 font-bold">
+                    <button onclick="loginUser('teacher')" class="w-full bg-slate-800 text-white p-3 rounded-xl font-bold uppercase text-xs mb-3 hover:bg-slate-700">Login as Admin</button>
+                    <button onclick="toggleTeacherLogin()" class="w-full text-xs text-indigo-500 font-bold">Back to Candidate Login</button>
+                </div>
+            </div>
+            <div id="loading-spinner" class="text-center text-indigo-500 font-black animate-pulse">CONNECTING TO GAME SERVER...</div>
+        </div>
+
+        <div id="screen-dashboard" class="w-full hide flex flex-col">
+            <div class="flex justify-center space-x-4 mb-8">
+                <button onclick="switchTab('jobs')" id="tab-jobs" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-active">🎯 Job Board</button>
+                <button onclick="switchTab('assessments')" id="tab-assessments" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-inactive">🧠 Skill & Vocab Training</button>
+            </div>
+            <div id="view-jobs" class="w-full"><div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+            <div id="view-assessments" class="w-full hide grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col gap-6">
+                    <div class="game-card p-8 text-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+                        <h3 class="font-display font-black text-3xl mb-2">Situational Training</h3>
+                        <p class="text-sm font-semibold text-indigo-100 mb-6">Face up to 5 scenarios. The action you choose builds different professional skills.</p>
+                        <button onclick="startQuiz()" class="bg-white text-indigo-600 px-8 py-4 rounded-full font-black uppercase tracking-wider hover:scale-105 transition-transform">Start Scenarios ▶</button>
+                    </div>
+                    <div class="game-card p-6">
+                        <h3 class="font-display font-black text-xl text-slate-800 mb-4">🗝️ Vocab Vault</h3>
+                        <div id="vocab-container" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
+                    </div>
+                </div>
+                <div class="game-card p-8 flex flex-col items-center justify-center">
+                    <h3 class="font-display font-black text-xl mb-4 text-slate-800">Your Skill Matrix</h3>
+                    <div class="w-full max-w-[350px] aspect-square relative"><canvas id="skillChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-teacher" class="w-full hide flex flex-col gap-8">
+            <h2 class="font-display font-black text-3xl text-slate-800">Teacher Dashboard</h2>
+            <div class="flex space-x-3 mb-4 bg-slate-200 p-1 rounded-xl self-start">
+                <button onclick="switchTeacherTab('students')" id="ttab-students" class="px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800">Student Progress</button>
+                <button onclick="switchTeacherTab('jobs')" id="ttab-jobs" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800">Job Config</button>
+                <button onclick="switchTeacherTab('questions')" id="ttab-questions" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800">Question Editor</button>
+            </div>
+            <div id="tview-students" class="game-card p-6 overflow-hidden"><table class="w-full text-left border-collapse"><thead><tr class="bg-slate-50 text-xs uppercase text-slate-500 font-black"><th class="p-4">Candidate</th><th class="p-4">IT 💻</th><th class="p-4">Num 🧮</th><th class="p-4">Lang 🗣️</th><th class="p-4">EQ 🤝</th><th class="p-4">Lead 👑</th><th class="p-4">Crea 🎨</th></tr></thead><tbody id="teacher-students-list" class="text-sm font-semibold text-slate-700"></tbody></table></div>
+            <div id="tview-jobs" class="hide game-card p-6"><div id="teacher-jobs-config" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></div>
+            <div id="tview-questions" class="hide game-card p-6 flex flex-col">
+                <button onclick="addNewQuestion()" class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-emerald-600 self-end mb-4">+ New Scenario</button>
+                <div id="teacher-questions-list" class="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-4"></div>
+            </div>
+        </div>
+
+        <div id="screen-quiz" class="w-full max-w-3xl game-card p-8 mt-6 hide">
+            <h2 class="font-display font-black text-2xl text-slate-800 mb-8">Workplace Scenario <span id="quiz-progress" class="text-indigo-500 ml-4"></span></h2>
+            <div class="bg-slate-50 rounded-2xl p-8 mb-8 border-2 border-slate-100"><p id="quiz-question" class="text-2xl text-slate-800 font-bold leading-relaxed"></p></div>
+            <div id="quiz-options" class="flex flex-col gap-4"></div>
+        </div>
+        <div id="screen-result" class="w-full max-w-md game-card p-8 mt-12 text-center hide">
+            <h2 class="font-display font-black text-3xl text-slate-800 mb-8">Training Complete!</h2>
+            <div id="result-breakdown" class="flex flex-col gap-3 mb-8 text-left bg-slate-50 p-6 rounded-2xl border-2 border-slate-100"></div>
+            <button onclick="returnToDashboard()" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm tracking-wider">Return to Training</button>
+        </div>
+
+        <div id="modal-final-boss" class="hide fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+            <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-8 relative overflow-y-auto max-h-[90vh] border-4 border-indigo-500">
+                <h2 class="font-display font-black text-4xl gradient-text mb-2">Mission Accomplished!</h2>
+                <p class="text-lg font-bold text-slate-700 mb-6">You secured a slot as <strong id="fb-job-title" class="text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg"></strong>.</p>
+                <div class="bg-slate-50 border-2 border-slate-100 rounded-2xl p-6 mb-6 space-y-6">
+                    <div><p class="text-sm font-black text-indigo-500 uppercase mb-2">1 Understand the Job</p><p id="fb-job-desc" class="text-sm text-slate-600 font-bold bg-white p-4 border-2 border-slate-200 rounded-xl"></p></div>
+                    <div><p class="text-sm font-black text-pink-500 uppercase mb-2">2 Prove Your "Experience"</p><ul id="fb-experiences" class="list-none text-sm text-slate-700 font-bold space-y-2 bg-white p-4 border-2 border-slate-200 rounded-xl"></ul></div>
+                    <div><p class="text-sm font-black text-teal-500 uppercase mb-2">3 Use Targeted Vocabulary</p><div id="fb-vocab-list" class="flex flex-wrap gap-2 text-sm"></div></div>
+                </div>
+                <button onclick="document.getElementById('modal-final-boss').classList.add('hide')" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm">Close & Start Writing ✍️</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // =====================================================================
+        // RESTORED ENVIRONMENT VARIABLES FOR CANVAS PLAYGROUND
+        // =====================================================================
+        const firebaseConfig = {
+  apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI",
+  authDomain: "career-quest-87d67.firebaseapp.com",
+  projectId: "career-quest-87d67",
+  storageBucket: "career-quest-87d67.firebasestorage.app",
+  messagingSenderId: "195580470541",
+  appId: "1:195580470541:web:a46a73981f70b1b199bc44",
+  measurementId: "G-33PJVLCJ7Z"
+};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const POWER_VOCAB = {
+            it: { 5: "Tech-savvy", 10: "Proficient", 15: "Digital-first" },
+            numeracy: { 5: "Accurate", 10: "Detail-oriented", 15: "Analytical" },
+            language: { 5: "Articulate", 10: "Persuasive", 15: "Bilingual" },
+            interpersonal: { 5: "Friendly", 10: "Empathetic", 15: "Collaborative" },
+            leadership: { 5: "Responsible", 10: "Proactive", 15: "Decisive" },
+            creativity: { 5: "Imaginative", 10: "Resourceful", 15: "Visionary" }
+        };
+
+        const SKILL_EXPERIENCES = {
+            it: "💻 Fixing broken internet routers and using computer systems.", numeracy: "🧮 Calculating discounts quickly and giving exact change.",
+            language: "🗣️ Speaking polite English to tourists and writing clear messages.", interpersonal: "🤝 Calming down upset customers and helping teammates.",
+            leadership: "👑 Taking charge when things break and organizing the team.", creativity: "🎨 Inventing fun new ideas and designing cool posters."
+        };
+
+        const defaultJobs = [
+            { id: 1, title: "Bubble Tea 'Shaker'", salary: "HK$14k - $17k / mo", desc: "Handle customers, calculate orders, lead trainees.", req: { numeracy: 4, interpersonal: 4, leadership: 2, it: 0, language: 0, creativity: 0 }, claimedBy: [] },
+            { id: 2, title: "Instagram Admin", salary: "HK$15k - $18k / mo", desc: "Design memes, edit reels, write catchy English copy.", req: { it: 4, creativity: 4, language: 4, numeracy: 0, interpersonal: 0, leadership: 0 }, claimedBy: [] },
+            { id: 3, title: "Homework Tutor", salary: "HK$15k - $19k / mo", desc: "Teach kids perfectly, invent fun creative learning games.", req: { language: 4, numeracy: 4, creativity: 4, it: 0, interpersonal: 0, leadership: 0 }, claimedBy: [] },
+            { id: 4, title: "Cybercafe Tech Assistant", salary: "HK$13k - $15k / mo", desc: "Fix networks, de-escalate angry gamers, bill clients.", req: { it: 4, interpersonal: 4, numeracy: 4, language: 0, leadership: 0, creativity: 0 }, claimedBy: [] },
+            { id: 5, title: "Sneaker Sales", salary: "HK$14k - $18k / mo", desc: "Provide friendly service, speak English to tourists, do math.", req: { interpersonal: 4, language: 4, numeracy: 4, it: 0, leadership: 0, creativity: 0 }, claimedBy: [] },
+            { id: 6, title: "Escape Room Actor", salary: "HK$14k - $16k / mo", desc: "Act creatively, override tech systems, ensure group safety.", req: { creativity: 4, it: 4, leadership: 4, numeracy: 0, language: 0, interpersonal: 0 }, claimedBy: [] }
+        ];
+
+        // Restored all 10 questions to prevent running out of scenarios too quickly
+        const defaultQuestions = [
+            { q: "😡 A customer is very angry because their drink is 15 minutes late. What do you do?", options: [{ text: "🙏 Say sorry nicely and listen to them.", skill: "interpersonal" }, { text: "🧮 Quickly calculate a 20% discount on their bill.", skill: "numeracy" }, { text: "💡 Offer them a special, secret drink you just invented.", skill: "creativity" }] },
+            { q: "📶 The shop's WiFi stops working when it is very busy!", options: [{ text: "💻 Restart the router and fix the internet settings.", skill: "it" }, { text: "👑 Tell the staff what to do and take control.", skill: "leadership" }, { text: "✍️ Write a polite English sign to tell the customers.", skill: "language" }] },
+            { q: "👟 You need to promote a new pair of sneakers online.", options: [{ text: "🗣️ Write a great Instagram post in perfect English.", skill: "language" }, { text: "📱 Use an app to edit a cool video.", skill: "it" }, { text: "🎨 Draw a beautiful poster for the shoes.", skill: "creativity" }] },
+            { q: "😟 A new worker is forgetting how to make the drinks.", options: [{ text: "🤝 Work with them and cheer them up.", skill: "interpersonal" }, { text: "📋 Give them an easier job to keep things moving.", skill: "leadership" }, { text: "🖍️ Draw a colorful picture guide for them.", skill: "creativity" }] },
+            { q: "✈️ A tourist does not understand Hong Kong money.", options: [{ text: "🗣️ Explain the money in clear, simple English.", skill: "language" }, { text: "🧮 Do the math in your head to show them the price.", skill: "numeracy" }, { text: "📱 Use an iPad app to show them the numbers.", skill: "it" }] },
+            { q: "😠 Two coworkers are fighting over who gets to rest first.", options: [{ text: "✌️ Help them talk nicely and solve the problem.", skill: "interpersonal" }, { text: "🗓️ Make a fair schedule that everyone must follow.", skill: "leadership" }, { text: "⏱️ Calculate exactly how many minutes of rest each person gets.", skill: "numeracy" }] },
+            { q: "🚪 A door in the escape room is broken and stuck!", options: [{ text: "💻 Use the computer system to unlock it.", skill: "it" }, { text: "🛡️ Keep everyone calm and walk them out safely.", skill: "leadership" }, { text: "👻 Make up a scary story about why the door is stuck.", skill: "creativity" }] },
+            { q: "📊 The boss wants to know how much money we made this week.", options: [{ text: "📧 Write a very professional email to the boss.", skill: "language" }, { text: "📈 Calculate the exact money and profit we made.", skill: "numeracy" }, { text: "💻 Make an automatic table using computer software.", skill: "it" }] },
+            { q: "😭 A little kid is crying because they dropped their food.", options: [{ text: "❤️ Kneel down, speak softly, and make them feel better.", skill: "interpersonal" }, { text: "🎲 Make up a quick, fun game to make them laugh.", skill: "creativity" }, { text: "🧹 Tell a worker to clean the floor while you get new food.", skill: "leadership" }] },
+            { q: "📦 A delivery driver brings the wrong boxes to the shop.", options: [{ text: "🔢 Count the boxes to see how much money is missing.", skill: "numeracy" }, { text: "✉️ Write a polite but clear email to complain.", skill: "language" }, { text: "💻 Log into the computer database to fix the records.", skill: "it" }] }
+        ];
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let userData = { role: null, name: "", scores: { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 } };
+        let activeJobsList = []; let questionBank = []; let skillChartObj = null;
+        let currentQuizQuestions = []; let currentQuestionIndex = 0; let currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
+
+        window.switchScreen = (h, s) => { document.getElementById(h).classList.add('hide'); document.getElementById(s).classList.remove('hide'); }
+        window.toggleTeacherLogin = () => { document.getElementById('student-login-box').classList.toggle('hide'); document.getElementById('teacher-login-box').classList.toggle('hide'); }
+        window.switchTab = (tab) => {
+            document.getElementById('tab-jobs').className = tab==='jobs' ? "px-6 py-3 rounded-full font-bold text-sm transition-all tab-active" : "px-6 py-3 rounded-full font-bold text-sm transition-all tab-inactive";
+            document.getElementById('tab-assessments').className = tab==='assessments' ? "px-6 py-3 rounded-full font-bold text-sm transition-all tab-active" : "px-6 py-3 rounded-full font-bold text-sm transition-all tab-inactive";
+            document.getElementById('view-jobs').classList.toggle('hide', tab!=='jobs');
+            document.getElementById('view-assessments').classList.toggle('hide', tab!=='assessments');
+            if(tab==='assessments') updateChart();
+        }
+        window.switchTeacherTab = (tab) => {
+            ['students', 'jobs', 'questions'].forEach(t => {
+                document.getElementById(`ttab-${t}`).className = tab===t ? "px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800" : "px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800";
+                document.getElementById(`tview-${t}`).classList.toggle('hide', tab!==t);
+            });
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), (sysDoc) => {
+                    // Auto-repair the database if it accidentally saved fewer than 6 jobs
+                    if (!sysDoc.exists() || (sysDoc.data().jobs && sysDoc.data().jobs.length < 6)) {
+                        setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: defaultJobs });
+                    } else { 
+                        activeJobsList = sysDoc.data().jobs || defaultJobs; 
+                        if(userData.role === 'student') updateStudentJobBoard(); 
+                        if(userData.role === 'teacher') renderTeacherJobsConfig(); 
+                    }
+                });
+                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), (qDoc) => {
+                    if (!qDoc.exists()) setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: defaultQuestions });
+                    else { questionBank = qDoc.data().bank || defaultQuestions; if(userData.role === 'teacher') renderTeacherQuestions(); }
+                });
+                document.getElementById('loading-spinner').classList.add('hide'); document.getElementById('login-form').classList.remove('hide');
+            }
+        });
+
+        window.loginUser = async (role) => {
+            if (!currentUser) return;
+            if (role === 'teacher') {
+                if (document.getElementById("input-password").value !== "admin123") return alert("Incorrect admin password.");
+                userData.role = 'teacher'; userData.name = "Admin";
+                document.getElementById("display-name").innerText = "Admin"; document.getElementById("role-badge").innerText = "TEACHER";
+                document.getElementById("header-user").classList.remove("hidden");
+                switchScreen('screen-login', 'screen-teacher'); initTeacherDashboard(); return;
+            }
+            const input = document.getElementById("input-name").value.trim();
+            if (!input) return alert("Please enter your name.");
+            userData.role = 'student'; userData.name = input;
+            document.getElementById("display-name").innerText = userData.name; document.getElementById("role-badge").innerText = "PLAYER"; document.getElementById("header-user").classList.remove("hidden");
+            const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) userData.scores = userDoc.data().scores || userData.scores;
+            else await setDoc(userRef, { uid: currentUser.uid, name: userData.name, role: 'student', scores: userData.scores });
+            switchScreen('screen-login', 'screen-dashboard'); initChart(); updateStudentDashboard(); switchTab('jobs');
+        }
+
+        function updateStudentDashboard() { updateChart(); updateStudentJobBoard(); renderVocabulary(); }
+        function renderVocabulary() {
+            const container = document.getElementById('vocab-container'); container.innerHTML = '';
+            const skills = { it: 'IT 💻', numeracy: 'Num 🧮', language: 'Lang 🗣️', interpersonal: 'EQ 🤝', leadership: 'Lead 👑', creativity: 'Creat 🎨' };
+            for (let skill in POWER_VOCAB) {
+                const score = userData.scores[skill];
+                for (let threshold in POWER_VOCAB[skill]) {
+                    const isUnlocked = score >= parseInt(threshold);
+                    container.innerHTML += `<div class="p-3 text-center text-xs flex flex-col justify-center items-center h-16 ${isUnlocked ? 'vocab-unlocked' : 'vocab-locked'}">${isUnlocked ? `<span class="text-sm">${POWER_VOCAB[skill][threshold]}</span><span class="text-[9px] opacity-70 uppercase tracking-wide mt-1">${skills[skill]}</span>` : `<span>🔒 ???</span><span class="text-[9px] font-bold mt-1">Need ${threshold} ${skills[skill]}</span>`}</div>`;
+                }
+            }
+        }
+
+        window.updateStudentJobBoard = () => {
+            const container = document.getElementById("job-grid"); if (!container) return; container.innerHTML = '';
+            const userClaimedAny = activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid));
+            activeJobsList.forEach((job, index) => {
+                const isUnlocked = Object.keys(job.req).every(k => userData.scores[k] >= job.req[k]);
+                const hasClaimed = job.claimedBy.some(c => c.uid === currentUser.uid);
+                const isFull = job.claimedBy.length >= 6;
+                let reqHtml = '', slotsHtml = '<ul class="space-y-2 mt-2">';
+                const labels = { it: 'IT 💻', numeracy: 'Num 🧮', language: 'Lang 🗣️', interpersonal: 'EQ 🤝', leadership: 'Lead 👑', creativity: 'Creat 🎨' };
+                for (let key in job.req) if (job.req[key] > 0) reqHtml += `<span class="text-xs px-2 py-1 rounded-lg border-2 font-bold ${userData.scores[key] >= job.req[key] ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">${labels[key]} ${userData.scores[key]}/${job.req[key]}</span>`;
+                for(let i=0; i<6; i++) {
+                    if (job.claimedBy[i]) slotsHtml += `<li class="text-xs p-2 rounded-lg font-bold flex justify-between items-center ${job.claimedBy[i].uid === currentUser.uid ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-50'}"><span>👤 ${job.claimedBy[i].name}</span></li>`;
+                    else slotsHtml += `<li class="text-xs border-2 border-dashed border-slate-200 text-slate-400 p-2 rounded-lg font-bold">⭕ Slot ${i+1} Open</li>`;
+                }
+                slotsHtml += '</ul>';
+                let actionBtn = hasClaimed ? `<div class="mt-4"><div class="w-full bg-emerald-500 text-white text-center py-3 rounded-xl text-sm font-black uppercase mb-2">✓ Requirements Met</div><button onclick="triggerFinalBossModal(${index})" class="w-full bg-slate-800 text-white py-3 rounded-xl text-sm font-black uppercase">View Mission Prompt</button></div>` : userClaimedAny ? `<div class="w-full bg-slate-200 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">1 Job Limit Reached</div>` : isFull ? `<div class="w-full bg-slate-200 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">All Slots Filled</div>` : isUnlocked ? `<button onclick="claimJob(${index})" class="w-full btn-primary py-3 rounded-xl text-sm font-black uppercase tracking-wider mt-4">Claim Role ▶</button>` : `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4">Requirements Not Met</div>`;
+                container.innerHTML += `<div class="game-card p-6 flex flex-col justify-between ${isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : ''}"><div><h4 class="font-display font-black text-xl mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl mb-4"><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div>${slotsHtml}${actionBtn}</div></div>`;
+            });
+        };
+
+        window.claimJob = async (jobIndex) => {
+            if (!currentUser || activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid))) return;
+            const newJobs = [...activeJobsList]; newJobs[jobIndex].claimedBy.push({ uid: currentUser.uid, name: userData.name });
+            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); triggerFinalBossModal(jobIndex); } catch (e) { console.error(e); }
+        };
+
+        window.triggerFinalBossModal = (jobIndex) => {
+            const job = activeJobsList[jobIndex];
+            document.getElementById('fb-job-title').innerText = job.title; document.getElementById('fb-job-desc').innerText = `"${job.desc}"`;
+            let expHtml = ""; for (let skill in job.req) if (job.req[skill] > 0) expHtml += `<li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> ${SKILL_EXPERIENCES[skill]}</li>`;
+            document.getElementById('fb-experiences').innerHTML = expHtml;
+            const vocabContainer = document.getElementById('fb-vocab-list'); vocabContainer.innerHTML = '';
+            let unlocked = []; for (let s in job.req) if(job.req[s]>0) for(let t in POWER_VOCAB[s]) if(userData.scores[s]>=parseInt(t)) unlocked.push(POWER_VOCAB[s][t]);
+            if (unlocked.length === 0) vocabContainer.innerHTML = '<span class="text-slate-400 italic">No special vocabulary unlocked yet. Complete more training!</span>';
+            else unlocked.forEach(w => vocabContainer.innerHTML += `<span class="bg-gradient-to-r from-teal-100 to-emerald-100 border-2 border-teal-200 text-teal-800 font-bold px-3 py-1.5 rounded-xl">${w}</span>`);
+            document.getElementById('modal-final-boss').classList.remove('hide');
+        }
+
+        window.startQuiz = () => {
+            // Retrieve up to 5 questions, but handle gracefully if there are fewer
+            currentQuizQuestions = [...questionBank].sort(() => 0.5 - Math.random()).slice(0, 5); 
+            if (currentQuizQuestions.length === 0) {
+                alert("No scenarios available in the question bank. Please ask your teacher to add some.");
+                return;
+            }
+            currentQuestionIndex = 0;
+            currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
+            switchScreen('screen-dashboard', 'screen-quiz'); renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const qObj = currentQuizQuestions[currentQuestionIndex];
+            
+            // Dynamic progression based on the actual number of questions loaded
+            document.getElementById("quiz-progress").innerText = `${currentQuestionIndex + 1}/${currentQuizQuestions.length}`; 
+            document.getElementById("quiz-question").innerText = `"${qObj.q}"`;
+            
+            const optsContainer = document.getElementById("quiz-options"); optsContainer.innerHTML = '';
+            [...qObj.options].sort(() => 0.5 - Math.random()).forEach(opt => {
+                const btn = document.createElement("button"); btn.className = "btn-option w-full text-left p-5 font-bold text-slate-700 text-lg"; btn.innerText = opt.text;
+                btn.onclick = () => { 
+                    currentRoundGains[opt.skill] += 2; 
+                    currentQuestionIndex++; 
+                    
+                    // Proceed only if the index is strictly less than the available number of questions
+                    if (currentQuestionIndex < currentQuizQuestions.length) {
+                        renderQuizQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                };
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        async function finishQuiz() {
+            let breakdownHtml = ""; const labels = { it: 'IT', numeracy: 'Numeracy', language: 'Language', interpersonal: 'Interpersonal', leadership: 'Leadership', creativity: 'Creativity' };
+            for (let skill in currentRoundGains) {
+                if (currentRoundGains[skill] > 0) {
+                    userData.scores[skill] = Math.min(20, userData.scores[skill] + currentRoundGains[skill]);
+                    breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 font-black">+${currentRoundGains[skill]}</span></div>`;
+                }
+            }
+            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid), { scores: userData.scores }); } catch (e) {}
+            document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500'>No points gained.</p>"; switchScreen('screen-quiz', 'screen-result');
+        }
+
+        window.returnToDashboard = () => { updateStudentDashboard(); switchScreen('screen-result', 'screen-dashboard'); switchTab('assessments'); }
+
+        function initChart() {
+            skillChartObj = new Chart(document.getElementById('skillChart').getContext('2d'), {
+                type: 'radar',
+                data: { labels: ['IT', 'Num', 'Lang', 'EQ', 'Lead', 'Creat'], datasets: [{ data: [0,0,0,0,0,0], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: '#6366f1', borderWidth: 3 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 20, ticks: { display: false } } }, plugins: { legend: { display: false } } }
+            });
+        }
+        function updateChart() { if (skillChartObj) { skillChartObj.data.datasets[0].data = [ userData.scores.it, userData.scores.numeracy, userData.scores.language, userData.scores.interpersonal, userData.scores.leadership, userData.scores.creativity ]; skillChartObj.update(); } }
+
+        function initTeacherDashboard() {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snapshot) => {
+                const tbody = document.getElementById('teacher-students-list'); tbody.innerHTML = '';
+                snapshot.forEach(doc => { const u = doc.data(); if(u.role === 'student') tbody.innerHTML += `<tr class="border-b"><td class="p-4 font-black">${u.name}</td><td class="p-4">${u.scores.it}</td><td class="p-4">${u.scores.numeracy}</td><td class="p-4">${u.scores.language}</td><td class="p-4">${u.scores.interpersonal}</td><td class="p-4">${u.scores.leadership}</td><td class="p-4">${u.scores.creativity}</td></tr>`; });
+            });
+            renderTeacherJobsConfig(); renderTeacherQuestions();
+        }
+
+        window.renderTeacherJobsConfig = () => {
+            const container = document.getElementById('teacher-jobs-config'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
+            activeJobsList.forEach((job, index) => {
+                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col"><label class="text-[9px] uppercase">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="20" class="border p-1"></div>`);
+                container.innerHTML += `<div class="bg-slate-50 p-5 rounded-2xl"><div class="flex justify-between mb-2"><h4>${job.title}</h4><button onclick="saveJobConfig(${index})" class="bg-indigo-500 text-white px-2 rounded">Save</button></div><div class="grid grid-cols-3 gap-2">${inputsHtml}</div></div>`;
+            });
+        }
+        window.saveJobConfig = async (index) => { const newJobs = [...activeJobsList]; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => newJobs[index].req[k] = parseInt(document.getElementById(`job-${index}-${k}`).value) || 0); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); } catch (e) {} }
+
+        window.renderTeacherQuestions = () => {
+            const container = document.getElementById('teacher-questions-list'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
+            questionBank.forEach((q, index) => {
+                let optsHtml = ''; q.options.forEach((opt, oIdx) => optsHtml += `<div class="flex gap-2 mb-1"><input type="text" id="q-${index}-opt-${oIdx}" value="${opt.text}" class="border p-1 flex-grow"><select id="q-${index}-skill-${oIdx}" class="border">${['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].map(s => `<option value="${s}" ${s===opt.skill?'selected':''}>${s}</option>`).join('')}</select></div>`);
+                container.innerHTML += `<div class="border p-4 mb-4 relative"><button onclick="deleteQuestion(${index})" class="absolute top-2 right-2 text-red-500">✕</button><textarea id="q-${index}-text" class="w-full border p-2 mb-2">${q.q}</textarea>${optsHtml}<button onclick="saveQuestion(${index})" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded mt-2">Save</button></div>`;
+            });
+        }
+        window.saveQuestion = async (index) => { const newBank = [...questionBank]; newBank[index].q = document.getElementById(`q-${index}-text`).value; for(let i=0; i<3; i++) { newBank[index].options[i].text = document.getElementById(`q-${index}-opt-${i}`).value; newBank[index].options[i].skill = document.getElementById(`q-${index}-skill-${i}`).value; } try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); alert("Saved"); } catch(e) {} }
+        window.addNewQuestion = async () => { const newBank = [{ q: "New scenario...", options: [{text:"Option A", skill:"it"}, {text:"Option B", skill:"numeracy"}, {text:"Option C", skill:"language"}] }, ...questionBank]; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
+        window.deleteQuestion = async (index) => { if(!confirm("Delete?")) return; const newBank = [...questionBank]; newBank.splice(index, 1); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
+
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+        initAuth();
+    </script>
+</body>
+</html>
