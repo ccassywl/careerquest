@@ -481,7 +481,7 @@
             let breakdownHtml = ""; const labels = { it: 'IT 💻', numeracy: 'Numeracy 🧮', language: 'Language 🗣️', interpersonal: 'Interpersonal 🤝', leadership: 'Leadership 👑', creativity: 'Creativity 🎨' };
             for (let skill in currentRoundGains) {
                 if (currentRoundGains[skill] > 0) {
-                    userData.scores[skill] = Math.min(20, userData.scores[skill] + currentRoundGains[skill]);
+userData.scores[skill] += currentRoundGains[skill];
                     breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg font-black text-lg">+${currentRoundGains[skill]}</span></div>`;
                 }
             }
@@ -495,7 +495,7 @@
             skillChartObj = new Chart(document.getElementById('skillChart').getContext('2d'), {
                 type: 'radar',
                 data: { labels: ['IT', 'Num', 'Lang', 'EQ', 'Lead', 'Creat'], datasets: [{ data: [0,0,0,0,0,0], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: '#6366f1', pointBackgroundColor: '#ec4899', pointBorderColor: '#fff', borderWidth: 3 }] },
-                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 20, ticks: { display: false, stepSize: 4 }, pointLabels: { font: { size: 13, weight: '800' }, color: '#475569' } } }, plugins: { legend: { display: false } } }
+               options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, ticks: { display: false, stepSize: 4 }, pointLabels: { font: { size: 13, weight: '800' }, color: '#475569' } } }, plugins: { legend: { display: false } } }
             });
         }
         function updateChart() { if (skillChartObj) { skillChartObj.data.datasets[0].data = [ userData.scores.it, userData.scores.numeracy, userData.scores.language, userData.scores.interpersonal, userData.scores.leadership, userData.scores.creativity ]; skillChartObj.update(); } }
@@ -537,7 +537,7 @@
             
             let html = '';
             activeJobsList.forEach((job, index) => {
-                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="20" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);
+                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="999" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);;
                 const jobMaxSlots = job.maxSlots || 6;
                 html += `
                     <div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-100 relative">
