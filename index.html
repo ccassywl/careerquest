@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chiu Chow Career Quest</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Gamified Modern Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <script>
@@ -46,11 +43,11 @@
 
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-slate-200">
         <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
-            <h1 class="font-display font-black text-2xl tracking-tight text-slate-800">
-                🚀 Career<span class="text-indigo-500">Quest</span>
+            <h1 class="font-display font-black text-2xl tracking-tight text-slate-800 flex items-center gap-3">
+                <img src="image_5ecfea.jpg" alt="Logo" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                <span>Career<span class="text-indigo-500">Quest</span></span>
             </h1>
             <div class="flex items-center gap-4">
-                <!-- PREVIEW BACK BUTTON -->
                 <div id="header-teacher-controls" class="hidden">
                     <button onclick="exitPreview()" class="bg-rose-500 text-white px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider shadow-md hover:bg-rose-600 transition-colors">⬅ Back to Admin</button>
                 </div>
@@ -81,7 +78,6 @@
             <div id="loading-spinner" class="text-center text-indigo-500 font-black animate-pulse">CONNECTING TO GAME SERVER...</div>
         </div>
 
-        <!-- ==================== STUDENT DASHBOARD ==================== -->
         <div id="screen-dashboard" class="w-full hide flex flex-col">
             <div class="flex justify-center space-x-4 mb-8">
                 <button onclick="switchTab('jobs')" id="tab-jobs" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-active">🎯 Job Board</button>
@@ -91,17 +87,17 @@
             <div id="view-jobs" class="w-full">
                 <div class="mb-8 text-center max-w-2xl mx-auto">
                     <h2 class="font-display font-black text-3xl text-slate-800">Job Opportunities</h2>
-                    <p class="text-slate-500 font-semibold mt-2">Build your skills in the training tab. Once you meet the requirements, claim your role! <strong>(Max 1 job total)</strong>.</p>
+                    <p class="text-slate-500 font-semibold mt-2">1. Aim for a job! 2. Build those specific skills. 3. Claim your role! <strong>(Max 1 job total)</strong>.</p>
                 </div>
-                <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                <div id="job-grid" class="w-full"></div>
             </div>
             
             <div id="view-assessments" class="w-full hide grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="flex flex-col gap-6">
                     <div class="game-card p-8 text-center bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
                         <h3 class="font-display font-black text-3xl mb-2">Situational Training</h3>
-                        <p class="text-sm font-semibold text-indigo-100 mb-6">Face up to 5 scenarios. The action you choose builds different professional skills.</p>
-                        <button onclick="startQuiz()" class="bg-white text-indigo-600 px-8 py-4 rounded-full font-black uppercase tracking-wider hover:scale-105 transition-transform">Start Scenarios ▶</button>
+                        <p class="text-sm font-semibold text-indigo-100 mb-6">Face up to 5 scenarios. Choose actions to build skills. <br><strong>⚠️ Beware: Gaining skills NOT required for your target job will cause a penalty!</strong></p>
+                        <button onclick="startQuiz()" class="bg-white text-indigo-600 px-8 py-4 rounded-full font-black uppercase tracking-wider hover:scale-105 transition-transform shadow-lg">Start Scenarios ▶</button>
                     </div>
                     <div class="game-card p-6">
                         <h3 class="font-display font-black text-xl text-slate-800 mb-4">🗝️ Vocab Vault</h3>
@@ -115,7 +111,6 @@
             </div>
         </div>
 
-        <!-- ==================== TEACHER DASHBOARD ==================== -->
         <div id="screen-teacher" class="w-full hide flex flex-col gap-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
                 <h2 class="font-display font-black text-3xl text-slate-800">Teacher Dashboard</h2>
@@ -131,7 +126,6 @@
                 <button onclick="switchTeacherTab('questions')" id="ttab-questions" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 whitespace-nowrap">Question Editor</button>
             </div>
 
-            <!-- T-View: Students -->
             <div id="tview-students" class="game-card p-6 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -149,16 +143,14 @@
                 </div>
             </div>
 
-            <!-- T-View: Jobs -->
             <div id="tview-jobs" class="hide game-card p-6">
                 <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
                     <p class="text-sm font-semibold text-slate-500">Fully edit the title, description, available slots, and required skills for each role.</p>
                     <button onclick="addNewJob()" class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm hover:bg-emerald-600 transition-colors">+ New Job Listing</button>
                 </div>
-                <div id="teacher-jobs-config" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                <div id="teacher-jobs-config" class="w-full"></div>
             </div>
 
-            <!-- T-View: Questions -->
             <div id="tview-questions" class="hide game-card p-6 flex flex-col">
                 <div class="flex justify-between items-center mb-6">
                     <p class="text-sm font-semibold text-slate-500">Edit scenarios. The skill chosen gets +2 points.</p>
@@ -168,7 +160,6 @@
             </div>
         </div>
 
-        <!-- ==================== SCREEN 4: QUIZ (SCENARIOS) ==================== -->
         <div id="screen-quiz" class="w-full max-w-3xl game-card p-8 mt-6 hide">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="font-display font-black text-2xl text-slate-800">Workplace Scenario</h2>
@@ -179,7 +170,6 @@
             <div id="quiz-options" class="flex flex-col gap-4"></div>
         </div>
 
-        <!-- ==================== SCREEN 5: RESULTS ==================== -->
         <div id="screen-result" class="w-full max-w-md game-card p-8 mt-12 text-center hide">
             <div class="text-6xl mb-4">🎉</div>
             <h2 class="font-display font-black text-3xl text-slate-800 mb-2">Training Complete!</h2>
@@ -188,7 +178,6 @@
             <button onclick="returnToDashboard()" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm tracking-wider">Return to Training</button>
         </div>
 
-        <!-- ==================== MODAL: FINAL BOSS ==================== -->
         <div id="modal-final-boss" class="hide fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
             <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-8 relative overflow-y-auto max-h-[90vh] border-4 border-indigo-500">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
@@ -205,21 +194,12 @@
 
     </main>
 
-    <!-- FIREBASE & LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-       const firebaseConfig = {
-  apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI",
-  authDomain: "career-quest-87d67.firebaseapp.com",
-  projectId: "career-quest-87d67",
-  storageBucket: "career-quest-87d67.firebasestorage.app",
-  messagingSenderId: "195580470541",
-  appId: "1:195580470541:web:a46a73981f70b1b199bc44",
-  measurementId: "G-33PJVLCJ7Z"
-};
+        const firebaseConfig = { apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI", authDomain: "career-quest-87d67.firebaseapp.com", projectId: "career-quest-87d67", storageBucket: "career-quest-87d67.firebasestorage.app", messagingSenderId: "195580470541", appId: "1:195580470541:web:a46a73981f70b1b199bc44", measurementId: "G-33PJVLCJ7Z" };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         const POWER_VOCAB = {
@@ -264,10 +244,10 @@
         const db = getFirestore(app);
 
         let currentUser = null;
-        let userData = { role: null, name: "", scores: { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 } };
+        let userData = { role: null, name: "", targetJobId: undefined, scores: { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 } };
         let activeJobsList = []; let questionBank = []; let skillChartObj = null;
         let currentQuizQuestions = []; let currentQuestionIndex = 0; let currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
-        let isPreviewing = false; // State for teacher preview
+        let isPreviewing = false; 
 
         window.switchScreen = (h, s) => { document.getElementById(h).classList.add('hide'); document.getElementById(s).classList.remove('hide'); }
         window.toggleTeacherLogin = () => { document.getElementById('student-login-box').classList.toggle('hide'); document.getElementById('teacher-login-box').classList.toggle('hide'); }
@@ -282,7 +262,7 @@
 
         window.switchTeacherTab = (tab) => {
             ['students', 'jobs', 'questions'].forEach(t => {
-                document.getElementById(`ttab-${t}`).className = tab===t ? "px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800 transition-colors" : "px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 transition-colors";
+                document.getElementById(`ttab-${t}`).className = tab===t ? "px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800 whitespace-nowrap transition-colors" : "px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 whitespace-nowrap transition-colors";
                 document.getElementById(`tview-${t}`).classList.toggle('hide', tab!==t);
             });
         }
@@ -291,7 +271,6 @@
             if (user) {
                 currentUser = user;
                 onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), (sysDoc) => {
-                    // Removed the auto-repair length check so teachers can delete jobs. Only resets if missing completely.
                     if (!sysDoc.exists() || !sysDoc.data().jobs) {
                         setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: defaultJobs });
                     } else { 
@@ -323,8 +302,12 @@
             document.getElementById("display-name").innerText = userData.name; document.getElementById("role-badge").innerText = "PLAYER"; document.getElementById("header-user").classList.remove("hidden");
             const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
             const userDoc = await getDoc(userRef);
-            if (userDoc.exists()) userData.scores = userDoc.data().scores || userData.scores;
-            else await setDoc(userRef, { uid: currentUser.uid, name: userData.name, role: 'student', scores: userData.scores });
+            if (userDoc.exists()) {
+                userData.scores = userDoc.data().scores || userData.scores;
+                userData.targetJobId = userDoc.data().targetJobId;
+            } else {
+                await setDoc(userRef, { uid: currentUser.uid, name: userData.name, role: 'student', scores: userData.scores });
+            }
             switchScreen('screen-login', 'screen-dashboard'); initChart(); updateStudentDashboard(); switchTab('jobs');
         }
 
@@ -335,9 +318,7 @@
             document.getElementById("display-name").innerText = "Admin Preview";
             document.getElementById("role-badge").innerText = "PREVIEW";
             switchScreen('screen-teacher', 'screen-dashboard');
-            initChart();
-            updateStudentDashboard();
-            switchTab('jobs');
+            initChart(); updateStudentDashboard(); switchTab('jobs');
         }
         window.exitPreview = () => {
             isPreviewing = false;
@@ -364,30 +345,35 @@
 
         window.updateStudentJobBoard = () => {
             const container = document.getElementById("job-grid"); if (!container) return; container.innerHTML = '';
-            const userClaimedAny = activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid));
+            const userClaimedAny = activeJobsList.some(j => j.claimedBy && j.claimedBy.some(c => c.uid === currentUser.uid));
             
-            let gridHtml = '';
+            let gridHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">';
 
             activeJobsList.forEach((job, index) => {
-                const isUnlocked = Object.keys(job.req).every(k => userData.scores[k] >= job.req[k]);
-                const hasClaimed = job.claimedBy.some(c => c.uid === currentUser.uid);
+                const isUnlocked = Object.keys(job.req).every(k => (userData.scores[k] || 0) >= job.req[k]);
                 const jobMaxSlots = job.maxSlots || 6;
-                const isFull = job.claimedBy.length >= jobMaxSlots;
-                let reqHtml = '', slotsHtml = '<ul class="space-y-2 mt-2">';
-                const labels = { it: 'IT 💻', numeracy: 'Num 🧮', language: 'Lang 🗣️', interpersonal: 'EQ 🤝', leadership: 'Lead 👑', creativity: 'Creat 🎨' };
-                
-                for (let key in job.req) {
-                    if (job.req[key] > 0) {
-                        const hasSkill = userData.scores[key] >= job.req[key];
-                        reqHtml += `<span class="text-xs px-2 py-1 rounded-lg border-2 font-bold ${hasSkill ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">${labels[key]} ${userData.scores[key]}/${job.req[key]}</span>`;
+                const isFull = job.claimedBy && job.claimedBy.length >= jobMaxSlots;
+                const hasClaimed = job.claimedBy && job.claimedBy.some(c => c.uid === currentUser.uid);
+                const isTargeted = userData.targetJobId === job.id;
+
+                let reqHtml = '';
+                ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => {
+                    if (job.req[k] > 0) {
+                        const userHas = userData.scores[k] || 0;
+                        const met = userHas >= job.req[k];
+                        reqHtml += `<span class="px-2 py-1 rounded text-[10px] font-black uppercase tracking-wide ${met ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}">${k.substring(0,4)}: ${userHas}/${job.req[k]}</span>`;
+                    }
+                });
+
+                let slotsHtml = `<div class="flex gap-1 mb-4 flex-wrap">`;
+                for(let i=0; i<jobMaxSlots; i++) {
+                    if(job.claimedBy && i < job.claimedBy.length) {
+                        slotsHtml += `<div class="w-6 h-6 rounded-full bg-indigo-500 border-2 border-white shadow-sm flex items-center justify-center text-white text-[10px] font-bold" title="${job.claimedBy[i].name}">${job.claimedBy[i].name.charAt(0)}</div>`;
+                    } else {
+                        slotsHtml += `<div class="w-6 h-6 rounded-full bg-slate-100 border-2 border-white shadow-sm"></div>`;
                     }
                 }
-
-                for(let i=0; i<jobMaxSlots; i++) {
-                    if (job.claimedBy[i]) slotsHtml += `<li class="text-xs p-2 rounded-lg font-bold flex justify-between items-center ${job.claimedBy[i].uid === currentUser.uid ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-200' : 'bg-slate-50 text-slate-700 border-2 border-slate-100'}"><span>👤 ${job.claimedBy[i].name}</span></li>`;
-                    else slotsHtml += `<li class="text-xs border-2 border-dashed border-slate-200 text-slate-400 p-2 rounded-lg font-bold">⭕ Slot ${i+1} Open</li>`;
-                }
-                slotsHtml += '</ul>';
+                slotsHtml += `</div>`;
 
                 let actionBtn = '';
                 if (hasClaimed) {
@@ -398,28 +384,45 @@
                         </div>
                     `;
                 } else if (userClaimedAny) {
-                    actionBtn = `<div class="w-full bg-slate-200 text-slate-500 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-300">1 Job Limit Reached</div>`;
+                    actionBtn = `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200">You already have a job</div>`;
+                } else if (isUnlocked && !isFull) {
+                    actionBtn = `<button onclick="claimJob(${index})" class="w-full bg-indigo-500 text-white text-center py-3 rounded-xl text-sm font-black uppercase mt-4 hover:bg-indigo-600 transition-colors shadow-md shadow-indigo-200">Claim Role</button>`;
                 } else if (isFull) {
-                    actionBtn = `<div class="w-full bg-slate-200 text-slate-500 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-300">All Slots Filled</div>`;
-                } else if (isUnlocked) {
-                    actionBtn = `<button onclick="claimJob(${index})" class="w-full btn-primary py-3 rounded-xl text-sm font-black uppercase tracking-wider mt-4">Claim Role ▶</button>`;
+                    actionBtn = `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200">Position Full</div>`;
+                } else if (isTargeted) {
+                    actionBtn = `<div class="w-full bg-amber-100 text-amber-600 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-amber-200 shadow-inner">🎯 Current Target</div>`;
                 } else {
-                    actionBtn = `<div class="w-full bg-slate-100 text-slate-400 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200">Requirements Not Met</div>`;
+                    actionBtn = `<button onclick="setTargetJob(${job.id})" class="w-full bg-white text-slate-500 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200 transition-colors">Aim for this Job 🎯</button>`;
                 }
 
-                gridHtml += `<div class="game-card p-6 flex flex-col justify-between relative ${isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : 'border-slate-100'}"><div><h4 class="font-display font-black text-xl text-slate-800 mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold text-slate-600 mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4"><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Required Skills:</p><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Candidate Slots (Max ${jobMaxSlots}):</p>${slotsHtml}${actionBtn}</div></div>`;
+                gridHtml += `<div class="game-card p-6 flex flex-col justify-between relative ${isTargeted ? 'border-amber-400 shadow-[0_0_0_4px_rgba(251,191,36,0.2)]' : (isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : 'border-slate-100')}"><div><h4 class="font-display font-black text-xl text-slate-800 mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold text-slate-600 mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4"><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Required Skills:</p><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Candidate Slots (Max ${jobMaxSlots}):</p>${slotsHtml}${actionBtn}</div></div>`;
             });
+            gridHtml += '</div>';
             container.innerHTML = gridHtml;
+        };
+
+        window.setTargetJob = async (jobId) => {
+            if (userData.role === 'teacher') return alert("Teachers cannot target jobs in preview mode.");
+            const target = activeJobsList.find(j => j.id === jobId);
+            if (!target) return;
+            if(!confirm(`🎯 Are you sure you want to aim for ${target.title}?\n\n⚠️ NEW RULE: If you answer a scenario and gain a skill that is NOT required for this job, you will LOSE 2 points in that skill! Read carefully!`)) return;
+            
+            userData.targetJobId = jobId;
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid), { targetJobId: jobId });
+                updateStudentJobBoard();
+                alert(`Target locked: ${target.title}. Good luck!`);
+            } catch(e) { console.error(e); }
         };
 
         window.claimJob = async (jobIndex) => {
             if (!currentUser) return;
             if (userData.role === 'teacher') return alert("Teachers cannot claim jobs in preview mode.");
 
-            if (activeJobsList.some(j => j.claimedBy.some(c => c.uid === currentUser.uid))) return alert("You can only claim 1 job.");
+            if (activeJobsList.some(j => j.claimedBy && j.claimedBy.some(c => c.uid === currentUser.uid))) return alert("You can only claim 1 job.");
             const job = activeJobsList[jobIndex];
             const jobMaxSlots = job.maxSlots || 6;
-            if (job.claimedBy.length >= jobMaxSlots || job.claimedBy.some(c => c.uid === currentUser.uid)) return;
+            if (job.claimedBy && (job.claimedBy.length >= jobMaxSlots || job.claimedBy.some(c => c.uid === currentUser.uid))) return;
 
             const newJobs = [...activeJobsList]; newJobs[jobIndex].claimedBy.push({ uid: currentUser.uid, name: userData.name });
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); triggerFinalBossModal(jobIndex); } catch (e) { console.error(e); }
@@ -466,10 +469,26 @@
             document.getElementById("quiz-progress").innerText = `${currentQuestionIndex + 1}/${currentQuizQuestions.length}`; 
             document.getElementById("quiz-question").innerText = `"${qObj.q}"`;
             const optsContainer = document.getElementById("quiz-options"); optsContainer.innerHTML = '';
+            
             [...qObj.options].sort(() => 0.5 - Math.random()).forEach(opt => {
                 const btn = document.createElement("button"); btn.className = "btn-option w-full text-left p-5 font-bold text-slate-700 text-lg"; btn.innerText = opt.text;
+                
                 btn.onclick = () => { 
-                    currentRoundGains[opt.skill] += 2; currentQuestionIndex++; 
+                    let gainedSkill = opt.skill;
+                    
+                    // Target Job Penalty Logic
+                    if (userData.targetJobId !== undefined) {
+                        const targetJob = activeJobsList.find(j => j.id === userData.targetJobId);
+                        if (targetJob && (!targetJob.req[gainedSkill] || targetJob.req[gainedSkill] === 0)) {
+                            currentRoundGains[gainedSkill] -= 2; // Penalty!
+                        } else {
+                            currentRoundGains[gainedSkill] += 2; 
+                        }
+                    } else {
+                        currentRoundGains[gainedSkill] += 2; 
+                    }
+
+                    currentQuestionIndex++; 
                     if (currentQuestionIndex < currentQuizQuestions.length) renderQuizQuestion();
                     else finishQuiz();
                 };
@@ -479,14 +498,26 @@
 
         async function finishQuiz() {
             let breakdownHtml = ""; const labels = { it: 'IT 💻', numeracy: 'Numeracy 🧮', language: 'Language 🗣️', interpersonal: 'Interpersonal 🤝', leadership: 'Leadership 👑', creativity: 'Creativity 🎨' };
+            
             for (let skill in currentRoundGains) {
-                if (currentRoundGains[skill] > 0) {
-userData.scores[skill] += currentRoundGains[skill];
-                    breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg font-black text-lg">+${currentRoundGains[skill]}</span></div>`;
+                if (currentRoundGains[skill] !== 0) {
+                    let oldScore = userData.scores[skill] || 0;
+                    let newScore = Math.max(0, oldScore + currentRoundGains[skill]);
+                    userData.scores[skill] = newScore;
+                    
+                    let diff = newScore - oldScore;
+                    if (diff > 0) {
+                        breakdownHtml += `<div class="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-slate-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg font-black text-lg">+${diff}</span></div>`;
+                    } else if (diff < 0) {
+                        breakdownHtml += `<div class="flex justify-between items-center bg-rose-50 p-3 rounded-xl shadow-sm border border-rose-100"><span class="font-bold text-slate-700">${labels[skill]}</span><span class="text-rose-600 bg-rose-100 px-3 py-1 rounded-lg font-black text-lg">${diff} (Penalty!)</span></div>`;
+                    }
                 }
             }
+
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid), { scores: userData.scores }); } catch (e) {}
-            document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500 text-center'>No points gained.</p>"; switchScreen('screen-quiz', 'screen-result');
+            
+            document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500 text-center'>No points gained or lost.</p>"; 
+            switchScreen('screen-quiz', 'screen-result');
         }
 
         window.returnToDashboard = () => { updateStudentDashboard(); switchScreen('screen-result', 'screen-dashboard'); switchTab('assessments'); }
@@ -495,7 +526,7 @@ userData.scores[skill] += currentRoundGains[skill];
             skillChartObj = new Chart(document.getElementById('skillChart').getContext('2d'), {
                 type: 'radar',
                 data: { labels: ['IT', 'Num', 'Lang', 'EQ', 'Lead', 'Creat'], datasets: [{ data: [0,0,0,0,0,0], backgroundColor: 'rgba(99, 102, 241, 0.2)', borderColor: '#6366f1', pointBackgroundColor: '#ec4899', pointBorderColor: '#fff', borderWidth: 3 }] },
-               options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, ticks: { display: false, stepSize: 4 }, pointLabels: { font: { size: 13, weight: '800' }, color: '#475569' } } }, plugins: { legend: { display: false } } }
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, ticks: { display: false, stepSize: 4 }, pointLabels: { font: { size: 13, weight: '800' }, color: '#475569' } } }, plugins: { legend: { display: false } } }
             });
         }
         function updateChart() { if (skillChartObj) { skillChartObj.data.datasets[0].data = [ userData.scores.it, userData.scores.numeracy, userData.scores.language, userData.scores.interpersonal, userData.scores.leadership, userData.scores.creativity ]; skillChartObj.update(); } }
@@ -521,9 +552,9 @@ userData.scores[skill] += currentRoundGains[skill];
                     tbody.innerHTML += `
                         <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                             <td class="p-4 font-black text-indigo-600 flex items-center gap-2"><span class="bg-slate-200 text-slate-500 rounded-full w-6 h-6 flex items-center justify-center text-xs">${index + 1}</span>${u.name}</td>
-                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.it}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.numeracy}</span></td>
-                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.language}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.interpersonal}</span></td>
-                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.leadership}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.creativity}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.it||0}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.numeracy||0}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.language||0}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.interpersonal||0}</span></td>
+                            <td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.leadership||0}</span></td><td class="p-4"><span class="bg-slate-100 px-2 py-1 rounded-md">${s.creativity||0}</span></td>
                             <td class="p-4 font-black text-emerald-500">${u.totalScore}</td>
                         </tr>
                     `; 
@@ -535,9 +566,9 @@ userData.scores[skill] += currentRoundGains[skill];
         window.renderTeacherJobsConfig = () => {
             const container = document.getElementById('teacher-jobs-config'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             
-            let html = '';
+            let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">';
             activeJobsList.forEach((job, index) => {
-                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="999" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);;
+                let inputsHtml = ''; ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => inputsHtml += `<div class="flex flex-col bg-white p-2 rounded-lg border border-slate-200"><label class="text-[9px] text-slate-500 font-black uppercase text-center mb-1">${k.substring(0,4)}</label><input type="number" id="job-${index}-${k}" value="${job.req[k]}" min="0" max="999" class="w-full text-center font-bold text-slate-700 focus:outline-none focus:text-indigo-600"></div>`);
                 const jobMaxSlots = job.maxSlots || 6;
                 html += `
                     <div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-100 relative">
@@ -560,6 +591,7 @@ userData.scores[skill] += currentRoundGains[skill];
                         <button onclick="saveJobConfig(${index})" class="w-full bg-slate-800 text-white px-3 py-3 rounded-xl font-black uppercase tracking-wider text-xs hover:bg-indigo-600 transition-colors">Save Updates</button>
                     </div>`;
             });
+            html += '</div>';
             container.innerHTML = html;
         }
 
