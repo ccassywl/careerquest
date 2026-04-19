@@ -1,0 +1,23 @@
+{
+  "name": "Chiu Chow Career Quest",
+  "short_name": "CareerQuest",
+  "description": "A situational workplace training and recruitment simulation.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0fdf4",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
