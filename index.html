@@ -42,7 +42,6 @@
     </style>
 </head>
 <body class="font-sans min-h-screen flex flex-col selection:bg-indigo-200">
-
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 shadow-sm border-b border-slate-200">
         <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
             <h1 class="font-display font-black text-2xl tracking-tight text-slate-800 flex items-center gap-3">
@@ -61,7 +60,6 @@
             </div>
         </div>
     </header>
-
     <main class="flex-grow w-full max-w-7xl mx-auto p-4 md:p-8 flex flex-col items-center relative">
         <div id="screen-login" class="w-full max-w-md game-card p-8 mt-12 text-center">
             <div class="mb-8"><div class="text-5xl mb-4">💼</div><h2 class="font-display font-black text-3xl text-slate-800 mb-2">Welcome!</h2></div>
@@ -79,7 +77,6 @@
             </div>
             <div id="loading-spinner" class="text-center text-indigo-500 font-black animate-pulse">CONNECTING TO GAME SERVER...</div>
         </div>
-
         <div id="screen-dashboard" class="w-full hide flex flex-col">
             <div class="flex justify-center space-x-4 mb-8">
                 <button onclick="switchTab('jobs')" id="tab-jobs" class="px-6 py-3 rounded-full font-bold text-sm transition-all tab-active">🎯 Job Board</button>
@@ -112,7 +109,6 @@
                 </div>
             </div>
         </div>
-
         <div id="screen-teacher" class="w-full hide flex flex-col gap-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
                 <h2 class="font-display font-black text-3xl text-slate-800">Teacher Dashboard</h2>
@@ -127,7 +123,6 @@
                 <button onclick="switchTeacherTab('jobs')" id="ttab-jobs" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 whitespace-nowrap">Job Config</button>
                 <button onclick="switchTeacherTab('questions')" id="ttab-questions" class="px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 whitespace-nowrap">Question Editor</button>
             </div>
-
             <div id="tview-students" class="game-card p-6 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -144,7 +139,6 @@
                     </table>
                 </div>
             </div>
-
             <div id="tview-jobs" class="hide game-card p-6">
                 <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
                     <p class="text-sm font-semibold text-slate-500">Fully edit the title, description, available slots, and required skills for each role.</p>
@@ -152,7 +146,6 @@
                 </div>
                 <div id="teacher-jobs-config" class="w-full"></div>
             </div>
-
             <div id="tview-questions" class="hide game-card p-6 flex flex-col">
                 <div class="flex justify-between items-center mb-6">
                     <p class="text-sm font-semibold text-slate-500">Edit scenarios. The skill chosen gets +2 points.</p>
@@ -161,7 +154,6 @@
                 <div id="teacher-questions-list" class="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-4"></div>
             </div>
         </div>
-
         <div id="screen-quiz" class="w-full max-w-3xl game-card p-8 mt-6 hide">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="font-display font-black text-2xl text-slate-800">Workplace Scenario</h2>
@@ -171,7 +163,6 @@
             <p class="text-xs text-slate-500 font-black uppercase tracking-wider mb-3 px-2">How do you handle this?</p>
             <div id="quiz-options" class="flex flex-col gap-4"></div>
         </div>
-
         <div id="screen-result" class="w-full max-w-md game-card p-8 mt-12 text-center hide">
             <div class="text-6xl mb-4">🎉</div>
             <h2 class="font-display font-black text-3xl text-slate-800 mb-2">Training Complete!</h2>
@@ -179,7 +170,6 @@
             <div id="result-breakdown" class="flex flex-col gap-3 mb-8 text-left bg-slate-50 p-6 rounded-2xl border-2 border-slate-100"></div>
             <button onclick="returnToDashboard()" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm tracking-wider">Return to Training</button>
         </div>
-
         <div id="modal-final-boss" class="hide fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
             <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-8 relative overflow-y-auto max-h-[90vh] border-4 border-indigo-500">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
@@ -193,17 +183,15 @@
                 <button onclick="document.getElementById('modal-final-boss').classList.add('hide')" class="w-full btn-primary p-4 rounded-full font-black uppercase text-sm">Close & Start Writing ✍️</button>
             </div>
         </div>
-
     </main>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+        
         const firebaseConfig = { apiKey: "AIzaSyAb-5reIdfJ0TKmqXLjWhfkndC0ypqyHMI", authDomain: "career-quest-87d67.firebaseapp.com", projectId: "career-quest-87d67", storageBucket: "career-quest-87d67.firebasestorage.app", messagingSenderId: "195580470541", appId: "1:195580470541:web:a46a73981f70b1b199bc44", measurementId: "G-33PJVLCJ7Z" };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
+        
         const POWER_VOCAB = {
             it: { 5: "Tech-savvy", 10: "Proficient", 15: "Digital-first" },
             numeracy: { 5: "Accurate", 10: "Detail-oriented", 15: "Analytical" },
@@ -212,13 +200,11 @@
             leadership: { 5: "Responsible", 10: "Proactive", 15: "Decisive" },
             creativity: { 5: "Imaginative", 10: "Resourceful", 15: "Visionary" }
         };
-
         const SKILL_EXPERIENCES = {
             it: "💻 Fixing broken internet routers and using computer systems.", numeracy: "🧮 Calculating discounts quickly and giving exact change.",
             language: "🗣️ Speaking polite English to tourists and writing clear messages.", interpersonal: "🤝 Calming down upset customers and helping teammates.",
             leadership: "👑 Taking charge when things break and organizing the team.", creativity: "🎨 Inventing fun new ideas and designing cool posters."
         };
-
         const defaultJobs = [
             { id: 1, title: "Bubble Tea 'Shaker'", salary: "HK$14k - $17k / mo", desc: "Handle customers, calculate orders, lead trainees.", req: { numeracy: 4, interpersonal: 4, leadership: 2, it: 0, language: 0, creativity: 0 }, maxSlots: 6, claimedBy: [] },
             { id: 2, title: "Instagram Admin", salary: "HK$15k - $18k / mo", desc: "Design memes, edit reels, write catchy English copy.", req: { it: 4, creativity: 4, language: 4, numeracy: 0, interpersonal: 0, leadership: 0 }, maxSlots: 6, claimedBy: [] },
@@ -227,7 +213,6 @@
             { id: 5, title: "Sneaker Sales", salary: "HK$14k - $18k / mo", desc: "Provide friendly service, speak English to tourists, do math.", req: { interpersonal: 4, language: 4, numeracy: 4, it: 0, leadership: 0, creativity: 0 }, maxSlots: 6, claimedBy: [] },
             { id: 6, title: "Escape Room Actor", salary: "HK$14k - $16k / mo", desc: "Act creatively, override tech systems, ensure group safety.", req: { creativity: 4, it: 4, leadership: 4, numeracy: 0, language: 0, interpersonal: 0 }, maxSlots: 6, claimedBy: [] }
         ];
-
         const defaultQuestions = [
             { q: "😡 A customer is very angry because their drink is 15 minutes late. What do you do?", options: [{ text: "🙏 Say sorry nicely and listen to them.", skill: "interpersonal" }, { text: "🧮 Quickly calculate a 20% discount on their bill.", skill: "numeracy" }, { text: "💡 Offer them a special, secret drink you just invented.", skill: "creativity" }] },
             { q: "📶 The shop's WiFi stops working when it is very busy!", options: [{ text: "💻 Restart the router and fix the internet settings.", skill: "it" }, { text: "👑 Tell the staff what to do and take control.", skill: "leadership" }, { text: "✍️ Write a polite English sign to tell the customers.", skill: "language" }] },
@@ -240,17 +225,16 @@
             { q: "😭 A little kid is crying because they dropped their food.", options: [{ text: "❤️ Kneel down, speak softly, and make them feel better.", skill: "interpersonal" }, { text: "🎲 Make up a quick, fun game to make them laugh.", skill: "creativity" }, { text: "🧹 Tell a worker to clean the floor while you get new food.", skill: "leadership" }] },
             { q: "📦 A delivery driver brings the wrong boxes to the shop.", options: [{ text: "🔢 Count the boxes to see how much money is missing.", skill: "numeracy" }, { text: "✉️ Write a polite but clear email to complain.", skill: "language" }, { text: "💻 Log into the computer database to fix the records.", skill: "it" }] }
         ];
-
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         let currentUser = null;
         let userData = { role: null, name: "", targetJobId: undefined, scores: { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 } };
         let activeJobsList = []; let questionBank = []; let skillChartObj = null;
         let currentQuizQuestions = []; let currentQuestionIndex = 0; let currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
         let isPreviewing = false; 
-
+        
         window.switchScreen = (h, s) => { document.getElementById(h).classList.add('hide'); document.getElementById(s).classList.remove('hide'); }
         window.toggleTeacherLogin = () => { document.getElementById('student-login-box').classList.toggle('hide'); document.getElementById('teacher-login-box').classList.toggle('hide'); }
         
@@ -261,14 +245,12 @@
             document.getElementById('view-assessments').classList.toggle('hide', tab!=='assessments');
             if(tab==='assessments') updateChart();
         }
-
         window.switchTeacherTab = (tab) => {
             ['students', 'jobs', 'questions'].forEach(t => {
                 document.getElementById(`ttab-${t}`).className = tab===t ? "px-4 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-slate-800 whitespace-nowrap transition-colors" : "px-4 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-800 whitespace-nowrap transition-colors";
                 document.getElementById(`tview-${t}`).classList.toggle('hide', tab!==t);
             });
         }
-
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
@@ -288,7 +270,6 @@
                 document.getElementById('loading-spinner').classList.add('hide'); document.getElementById('login-form').classList.remove('hide');
             }
         });
-
         window.loginUser = async (role) => {
             if (!currentUser) return;
             if (role === 'teacher') {
@@ -312,7 +293,6 @@
             }
             switchScreen('screen-login', 'screen-dashboard'); initChart(); updateStudentDashboard(); switchTab('jobs');
         }
-
         // --- PREVIEW LOGIC ---
         window.previewStudentView = () => {
             isPreviewing = true;
@@ -329,7 +309,6 @@
             document.getElementById("role-badge").innerText = "TEACHER";
             switchScreen('screen-dashboard', 'screen-teacher');
         }
-
         // --- STUDENT LOGIC ---
         function updateStudentDashboard() { updateChart(); updateStudentJobBoard(); renderVocabulary(); }
         
@@ -344,20 +323,17 @@
                 }
             }
         }
-
         window.updateStudentJobBoard = () => {
             const container = document.getElementById("job-grid"); if (!container) return; container.innerHTML = '';
             const userClaimedAny = activeJobsList.some(j => j.claimedBy && j.claimedBy.some(c => c.uid === currentUser.uid));
             
             let gridHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">';
-
             activeJobsList.forEach((job, index) => {
                 const isUnlocked = Object.keys(job.req).every(k => (userData.scores[k] || 0) >= job.req[k]);
                 const jobMaxSlots = job.maxSlots || 6;
                 const isFull = job.claimedBy && job.claimedBy.length >= jobMaxSlots;
                 const hasClaimed = job.claimedBy && job.claimedBy.some(c => c.uid === currentUser.uid);
                 const isTargeted = userData.targetJobId === job.id;
-
                 let reqHtml = '';
                 ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => {
                     if (job.req[k] > 0) {
@@ -366,17 +342,26 @@
                         reqHtml += `<span class="px-2 py-1 rounded text-[10px] font-black uppercase tracking-wide ${met ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'}">${k.substring(0,4)}: ${userHas}/${job.req[k]}</span>`;
                     }
                 });
-
-                let slotsHtml = `<div class="flex gap-1 mb-4 flex-wrap">`;
+                
+                // REDESIGNED SLOTS SECTION: Beautiful grid view showing FULL NAMES cleanly
+                let slotsHtml = `<div class="grid grid-cols-2 gap-1.5 mb-4">`;
                 for(let i=0; i<jobMaxSlots; i++) {
                     if(job.claimedBy && i < job.claimedBy.length) {
-                        slotsHtml += `<div class="w-6 h-6 rounded-full bg-indigo-500 border-2 border-white shadow-sm flex items-center justify-center text-white text-[10px] font-bold" title="${job.claimedBy[i].name}">${job.claimedBy[i].name.charAt(0)}</div>`;
+                        slotsHtml += `
+                            <div class="flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 px-2 py-1.5 rounded-lg text-xs font-bold text-indigo-700 shadow-sm" title="${job.claimedBy[i].name}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span>
+                                <span class="truncate">${job.claimedBy[i].name}</span>
+                            </div>`;
                     } else {
-                        slotsHtml += `<div class="w-6 h-6 rounded-full bg-slate-100 border-2 border-white shadow-sm"></div>`;
+                        slotsHtml += `
+                            <div class="flex items-center gap-1.5 bg-slate-50 border border-dashed border-slate-200 px-2 py-1.5 rounded-lg text-xs font-semibold text-slate-400 italic">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-300 flex-shrink-0"></span>
+                                <span class="truncate">Empty</span>
+                            </div>`;
                     }
                 }
                 slotsHtml += `</div>`;
-
+                
                 let actionBtn = '';
                 if (hasClaimed) {
                     actionBtn = `
@@ -396,13 +381,11 @@
                 } else {
                     actionBtn = `<button onclick="setTargetJob(${job.id})" class="w-full bg-white text-slate-500 hover:bg-amber-50 hover:text-amber-600 hover:border-amber-300 text-center py-3 rounded-xl text-sm font-black uppercase mt-4 border-2 border-slate-200 transition-colors">Aim for this Job 🎯</button>`;
                 }
-
                 gridHtml += `<div class="game-card p-6 flex flex-col justify-between relative ${isTargeted ? 'border-amber-400 shadow-[0_0_0_4px_rgba(251,191,36,0.2)]' : (isUnlocked && !hasClaimed && !isFull && !userClaimedAny ? 'border-indigo-400 shadow-[0_0_0_4px_rgba(99,102,241,0.1)]' : 'border-slate-100')}"><div><h4 class="font-display font-black text-xl text-slate-800 mb-1">${job.title}</h4><p class="text-xs font-bold text-indigo-500 mb-3 bg-indigo-50 inline-block px-2 py-1 rounded">${job.salary}</p><p class="text-sm font-semibold text-slate-600 mb-4 leading-relaxed">${job.desc}</p><div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4"><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Required Skills:</p><div class="flex flex-wrap gap-2">${reqHtml}</div></div></div><div><p class="text-[10px] text-slate-500 font-black uppercase tracking-wider mb-2">Candidate Slots (Max ${jobMaxSlots}):</p>${slotsHtml}${actionBtn}</div></div>`;
             });
             gridHtml += '</div>';
             container.innerHTML = gridHtml;
         };
-
         window.setTargetJob = async (jobId) => {
             if (userData.role === 'teacher') return alert("Teachers cannot target jobs in preview mode.");
             const target = activeJobsList.find(j => j.id === jobId);
@@ -416,20 +399,16 @@
                 alert(`Target locked: ${target.title}. Good luck!`);
             } catch(e) { console.error(e); }
         };
-
         window.claimJob = async (jobIndex) => {
             if (!currentUser) return;
             if (userData.role === 'teacher') return alert("Teachers cannot claim jobs in preview mode.");
-
             if (activeJobsList.some(j => j.claimedBy && j.claimedBy.some(c => c.uid === currentUser.uid))) return alert("You can only claim 1 job.");
             const job = activeJobsList[jobIndex];
             const jobMaxSlots = job.maxSlots || 6;
             if (job.claimedBy && (job.claimedBy.length >= jobMaxSlots || job.claimedBy.some(c => c.uid === currentUser.uid))) return;
-
             const newJobs = [...activeJobsList]; newJobs[jobIndex].claimedBy.push({ uid: currentUser.uid, name: userData.name });
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); triggerFinalBossModal(jobIndex); } catch (e) { console.error(e); }
         };
-
         window.triggerFinalBossModal = (jobIndex) => {
             const job = activeJobsList[jobIndex];
             document.getElementById('fb-job-title').innerText = job.title; document.getElementById('fb-job-desc').innerText = `"${job.desc}"`;
@@ -439,7 +418,6 @@
                 if (job.req[skill] > 0) expHtml += `<li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> ${SKILL_EXPERIENCES[skill]}</li>`;
             }
             document.getElementById('fb-experiences').innerHTML = expHtml;
-
             let unlockedWords = [];
             for (let skill in job.req) {
                 if (job.req[skill] > 0) {
@@ -457,7 +435,6 @@
             }
             document.getElementById('modal-final-boss').classList.remove('hide');
         }
-
         window.startQuiz = () => {
             if (userData.role === 'teacher') return alert("Teachers cannot take assessments in preview mode.");
             currentQuizQuestions = [...questionBank].sort(() => 0.5 - Math.random()).slice(0, 5); 
@@ -465,7 +442,6 @@
             currentQuestionIndex = 0; currentRoundGains = { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 };
             switchScreen('screen-dashboard', 'screen-quiz'); renderQuizQuestion();
         }
-
         function renderQuizQuestion() {
             const qObj = currentQuizQuestions[currentQuestionIndex];
             document.getElementById("quiz-progress").innerText = `${currentQuestionIndex + 1}/${currentQuizQuestions.length}`; 
@@ -489,7 +465,6 @@
                     } else {
                         currentRoundGains[gainedSkill] += 2; 
                     }
-
                     currentQuestionIndex++; 
                     if (currentQuestionIndex < currentQuizQuestions.length) renderQuizQuestion();
                     else finishQuiz();
@@ -497,7 +472,6 @@
                 optsContainer.appendChild(btn);
             });
         }
-
         async function finishQuiz() {
             let breakdownHtml = ""; const labels = { it: 'IT 💻', numeracy: 'Numeracy 🧮', language: 'Language 🗣️', interpersonal: 'Interpersonal 🤝', leadership: 'Leadership 👑', creativity: 'Creativity 🎨' };
             
@@ -515,15 +489,12 @@
                     }
                 }
             }
-
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid), { scores: userData.scores }); } catch (e) {}
             
             document.getElementById("result-breakdown").innerHTML = breakdownHtml || "<p class='font-bold text-slate-500 text-center'>No points gained or lost.</p>"; 
             switchScreen('screen-quiz', 'screen-result');
         }
-
         window.returnToDashboard = () => { updateStudentDashboard(); switchScreen('screen-result', 'screen-dashboard'); switchTab('assessments'); }
-
         function initChart() {
             skillChartObj = new Chart(document.getElementById('skillChart').getContext('2d'), {
                 type: 'radar',
@@ -532,7 +503,6 @@
             });
         }
         function updateChart() { if (skillChartObj) { skillChartObj.data.datasets[0].data = [ userData.scores.it, userData.scores.numeracy, userData.scores.language, userData.scores.interpersonal, userData.scores.leadership, userData.scores.creativity ]; skillChartObj.update(); } }
-
         // --- TEACHER DASHBOARD LOGIC ---
         function initTeacherDashboard() {
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'users'), (snapshot) => {
@@ -546,9 +516,7 @@
                         students.push({ ...u, totalScore: total });
                     }
                 });
-
                 students.sort((a, b) => b.totalScore - a.totalScore);
-
                 students.forEach((u, index) => {
                     const s = u.scores; 
                     tbody.innerHTML += `
@@ -564,7 +532,6 @@
             });
             renderTeacherJobsConfig(); renderTeacherQuestions();
         }
-
         window.renderTeacherJobsConfig = () => {
             const container = document.getElementById('teacher-jobs-config'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             
@@ -581,7 +548,6 @@
                             <div><label class="text-[10px] font-black text-slate-400 uppercase">Salary Range</label><input type="text" id="job-${index}-salary" value="${job.salary}" class="w-full border-2 border-slate-200 rounded-lg p-2 text-sm font-bold text-indigo-500 focus:border-indigo-500 outline-none"></div>
                             <div><label class="text-[10px] font-black text-slate-400 uppercase">Description</label><textarea id="job-${index}-desc" class="w-full border-2 border-slate-200 rounded-lg p-2 text-xs font-semibold text-slate-600 focus:border-indigo-500 outline-none" rows="2">${job.desc}</textarea></div>
                         </div>
-
                         <div class="mb-4 flex items-center gap-3 bg-white p-2 rounded-lg border border-slate-200">
                             <label class="text-[10px] text-slate-500 font-black uppercase whitespace-nowrap">Vacancies (Slots):</label>
                             <input type="number" id="job-${index}-maxSlots" value="${jobMaxSlots}" min="1" max="50" class="w-full text-right font-bold text-slate-700 focus:outline-none focus:text-indigo-600">
@@ -596,7 +562,6 @@
             html += '</div>';
             container.innerHTML = html;
         }
-
         window.saveJobConfig = async (index) => { 
             const newJobs = [...activeJobsList]; 
             newJobs[index].title = document.getElementById(`job-${index}-title`).value;
@@ -606,20 +571,17 @@
             ['it', 'numeracy', 'language', 'interpersonal', 'leadership', 'creativity'].forEach(k => newJobs[index].req[k] = parseInt(document.getElementById(`job-${index}-${k}`).value) || 0); 
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); alert("Saved Configuration!"); } catch (e) { console.error(e); } 
         }
-
         window.addNewJob = async () => {
             const newJobs = [...activeJobsList];
             newJobs.push({ id: Date.now(), title: "New Position", salary: "HK$0 / mo", desc: "Describe the responsibilities here...", req: { it: 0, numeracy: 0, language: 0, interpersonal: 0, leadership: 0, creativity: 0 }, maxSlots: 6, claimedBy: [] });
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); } catch(e) { console.error(e); }
         }
-
         window.deleteJob = async (index) => {
             if(!confirm("Are you sure you want to delete this job listing permanently?")) return;
             const newJobs = [...activeJobsList];
             newJobs.splice(index, 1);
             try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'state'), { jobs: newJobs }); } catch(e) { console.error(e); }
         }
-
         window.renderTeacherQuestions = () => {
             const container = document.getElementById('teacher-questions-list'); if(!container || userData.role !== 'teacher') return; container.innerHTML = '';
             questionBank.forEach((q, index) => {
@@ -630,7 +592,6 @@
         window.saveQuestion = async (index) => { const newBank = [...questionBank]; newBank[index].q = document.getElementById(`q-${index}-text`).value; for(let i=0; i<3; i++) { newBank[index].options[i].text = document.getElementById(`q-${index}-opt-${i}`).value; newBank[index].options[i].skill = document.getElementById(`q-${index}-skill-${i}`).value; } try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); alert("Saved"); } catch(e) {} }
         window.addNewQuestion = async () => { const newBank = [{ q: "✏️ Write your new scenario here...", options: [{text:"Option A", skill:"it"}, {text:"Option B", skill:"numeracy"}, {text:"Option C", skill:"language"}] }, ...questionBank]; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
         window.deleteQuestion = async (index) => { if(!confirm("Delete this scenario permanently?")) return; const newBank = [...questionBank]; newBank.splice(index, 1); try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'system', 'questions'), { bank: newBank }); } catch(e) {} }
-
         window.resetGameData = async () => {
             if(!confirm("⚠️ Are you SURE you want to erase all student progress and clear all job claims? This cannot be undone.")) return;
             try {
@@ -641,7 +602,6 @@
                 alert("✅ Game data has been completely wiped. Ready for the next class!");
             } catch(e) { alert("Failed to reset data."); }
         }
-
         const initAuth = async () => {
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } 
             else { await signInAnonymously(auth); }
@@ -660,7 +620,5 @@
             });
         }
     </script>
-</body>
-</html>
 </body>
 </html>
